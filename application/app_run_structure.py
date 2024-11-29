@@ -62,13 +62,19 @@ def run():
     exploreTab = Tab(window, widgetRow=0, widgetCol=0)
     playTab = Tab(window, widgetRow=0, widgetCol=1)
     
+    """
+    Gotta add some way to save good tracks that I find 
+    Make and play playlist from my spotify account
+    """
+    
+    
     exploreTab.add_widges_to_tab(
                 SearchBar(window), 
                 SearchResultsTables(window),
                 title="Search")
     
     exploreTab.add_widges_to_tab(
-                PlayerQueue(window), 
+                PlayerQueue(window),
                 title="Queue")
     
     
@@ -78,7 +84,9 @@ def run():
                 title="Player Panel")
     
     playTab.add_widges_to_tab(
-                title="Track Details")
+                TrackDetailsPanel(),
+                title="Track Details"
+                )
     
     window.setup_central_widget(
         exploreTab,

@@ -29,7 +29,6 @@ from spotipy.oauth2 import SpotifyOAuth
 
 from SpotifyWebViewController import *
 from SearchManager import *
-# from WidgetDefinitions import *
 
 
 # start QT application
@@ -39,9 +38,31 @@ Could be called MainWindowUIEventsController
 more like a WidgetDefintion to Webview Middle man
 
 """
+
+
+"""
+This could be like a general class for all the UI elements to access other UI elements
+This acts as my pub sub kinda
+    because UI elements know of eachother exsistance(defintions) and can find them on the pyqt5 window
+    with the find object functions below
+"""
+
+def find_Objects(window: QMainWindow, widgetsToFind: list[QObject]):
+    found_window_objs = []
+    for obj in widgetsToFind:
+        obj_found = window.findChild(obj)
+        found_window_objs.append(obj_found)
+    
+    return found_window_objs
+
+def find_anObject(window: QMainWindow, widgetToFind: QObject):
+    found_window_objs = window.findChild(widgetToFind)
+    return found_window_objs
+
+
 class MainWindowController():
-    def __init__(self):
-        pass
+    def __init__(self, window: QMainWindow = None):
+        self.window = window
     
     """
     More of a PYQT UI feature for formating rather than a action taken on the WebView  
@@ -53,8 +74,14 @@ class MainWindowController():
         # self.artwork_placeholder.setMinimumWidth(int(self.userControlsWidget.height() * 0.20))
         self.userBtnControlsWidget.setMinimumHeight(int(self.userControlsWidget.height() * 0.60))
 
-    def RunSearch(self, query: str, objects_to_update: List[QObject]):
-        SearchManager().perform_search(query, objects_to_update)
+    def RunSearch(self, query: str):
+        from WidgetDefinitions import SearchTextWidget, TrackTabel, AlbumsTabel, ArtistsTabel, PlaylistsTabel
+
+        objects_to_update = [SearchTextWidget, TrackTabel, AlbumsTabel, ArtistsTabel, PlaylistsTabel]
+        found_window_objs = find_Objects(self.window, objects_to_update)
+        print(len(found_window_objs))
+        
+        SearchManager().perform_search(query, found_window_objs)
     
     """
     This should be a function within playButton widget?
@@ -72,19 +99,30 @@ class MainWindowController():
         
 
     def ClickedTrack(self, item):
+        from WidgetDefinitions import TrackArtworkWidget, TrackTitle, PlayButtn
+
         track_id = item.id
         SpotifyWebViewController().load_song('track', track_id)
+        
+        found_objs = find_Objects(self.window, [TrackArtworkWidget, TrackTitle, PlayButtn])
+        found_objs[0].setImage(item.cover_url)
+        found_objs[1].setText(item.name)
+        found_objs[2].set_as_playing()
+        
         self.ClickedPlay()
         
 
 
-    def ClickedPlaylist(self, playlist_item, objects_to_update: List[QObject]):
+    def ClickedPlaylist(self, playlist_item):
+        from WidgetDefinitions import PlaylistQueueLabel, PlaylistQueueTabel
         playlist_id = playlist_item.id
         SpotifyWebViewController().load_song('playlist', playlist_id)
-        SearchManager().perform_queue_loading(playlist_item, objects_to_update)
+        
+        found_objs = find_Objects(self.window, [PlaylistQueueLabel, PlaylistQueueTabel])
+        SearchManager().perform_queue_loading(playlist_item, found_objs)
         # Programmatically click an item
         item_index = 1  # Index of the item you want to click (0-based)
-        objects_to_update[1].itemClicked.emit(objects_to_update[1].item(item_index))
+        found_objs[1].itemClicked.emit(found_objs[1].item(item_index))
         
         """
         Once queue table is loaded

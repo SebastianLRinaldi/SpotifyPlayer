@@ -82,7 +82,14 @@ class SearchManager:
                 ([2] --> 64X64)
                 track['album']['images'][0]['url'] --> image url
                 """
-                found_item = TrackItem(track['name'], track['artists'][0]['name'], track['album']['images'][1]['url'], track['id'])
+                
+                name = track['name']
+                artist = track['artists'][0]['name']
+                duration = track['duration_ms']
+                popularity = track['popularity']
+                cover_url = track['album']['images'][1]['url']
+                track_id = track['id']
+                found_item = TrackItem(name, artist, duration, popularity, cover_url, track_id)
                 #object_to_update.setText("FOUND TRACK") 
                 tableToUpdate.addItem(found_item)
                 # print(found_item)
@@ -193,7 +200,14 @@ class SearchManager:
                 track["Track"].keys() --> ['preview_url', 'available_markets', 'explicit', 'type', 'episode', 'track', 'album', 'artists', 'disc_number', 'track_number', 'duration_ms', 'external_ids', 'external_urls', 'href', 'id', 'name', 'popularity', 'uri', 'is_local']
 
                 """
-                found_item = TrackItem(track["track"]['name'], track["track"]['artists'][0]['name'], track["track"]['album']['images'][1]['url'], track["track"]['id'])
+                track_root = track["track"]
+                name = track_root['name'] 
+                artist = track_root['artists'][0]['name']
+                duration = track_root['duration_ms']
+                popularity = track_root['popularity']
+                cover_url = track_root['album']['images'][1]['url']
+                track_id = track_root['id']
+                found_item = TrackItem(name, artist, duration, popularity, cover_url, track_id)
                 #object_to_update.setText("FOUND TRACK") 
                 tableToUpdate.addItem(found_item)
                 # print(found_item)

@@ -104,8 +104,11 @@ class TrackDetailsPanel(QWidget):
         
         grid_layout = GridLayout(
             TrackArtworkWidget(),
-            TrackProgressWidget(),
-            TrackTitle()
+            TrackTitle(),
+            TrackArtist(),
+            TrackID(),
+            TrackDuration(),
+            TrackPopularity()
             )
         
         self.setLayout(grid_layout)

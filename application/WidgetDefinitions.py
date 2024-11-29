@@ -118,7 +118,34 @@ class TrackTitle(QLabel):
         super().__init__(text)
         self.widgetRow = widgetRow
         self.widgetCol = widgetCol
+        self.setObjectName("TrackTitle")
+        
+class TrackArtist(QLabel):
+    def __init__(self, text="No artist for track", widgetRow = -1, widgetCol = -1):
+        super().__init__(text)
+        self.widgetRow = widgetRow
+        self.widgetCol = widgetCol
+        
+class TrackID(QLabel):
+    def __init__(self, text="No id for track", widgetRow = -1, widgetCol = -1):
+        super().__init__(text)
+        self.widgetRow = widgetRow
+        self.widgetCol = widgetCol
+        
+        
+class TrackDuration(QLabel):
+    def __init__(self, text="No duration in ms for track", widgetRow = -1, widgetCol = -1):
+        super().__init__(text)
+        self.widgetRow = widgetRow
+        self.widgetCol = widgetCol
 
+
+class TrackPopularity(QLabel):
+    def __init__(self, text="No populatirt for track", widgetRow = -1, widgetCol = -1):
+        super().__init__(text)
+        self.widgetRow = widgetRow
+        self.widgetCol = widgetCol
+        
 
 from TimingManager import *
 """
@@ -126,10 +153,9 @@ Everything that uses this controlor should be in its own class?
 so we can make one instance on creating the pyqt5 applcation 
 instead of creating it every time we need to do something
 """
-from MainWindowController import *
+from MainWindowController import MainWindowController
    
 class TrackProgressWidget(QProgressBar):
-    
     def __init__(self, widgetRow = -1, widgetCol = -1):
         super().__init__()
         self.widgetRow = widgetRow
@@ -150,11 +176,11 @@ class TrackProgressWidget(QProgressBar):
         # Simulated progress value
         self.progress = 0
 
-        # # Start the timer
-        # self.timer.start()
-
     def update_progress(self):
         """Update the progress bar's value"""
+        """
+        Need to stop the timer when song reaches end either by duration or %%
+        """
         value = self.mwc.get_song_progress()
         self.setValue(value)
         print(f"Progress: {value}%")
@@ -262,7 +288,7 @@ class PlayButtn(QPushButton):
         self.clicked.connect(lambda: self.on_item_clicked())
 
     def on_item_clicked(self):
-        MainWindowController().ClickedPlay()
+        MainWindowController(self.window).ClickedPlay()
         self.update_playbtn_state()
         
     def set_as_playing(self):
@@ -300,14 +326,14 @@ class NextTrackButtn(QPushButton):
         super().__init__(text)
         self.widgetRow = widgetRow
         self.widgetCol = widgetCol
-        self.clicked.connect(lambda:MainWindowController().ClickedNextTrack())
+        self.clicked.connect(lambda:MainWindowController(self.window).ClickedNextTrack())
 
 class PrevousTrackButtn(QPushButton):
     def __init__(self, text="PREV", widgetRow = -1, widgetCol = -1):
         super().__init__(text)
         self.widgetRow = widgetRow
         self.widgetCol = widgetCol
-        self.clicked.connect(lambda:MainWindowController().ClickedPrevTrack())
+        self.clicked.connect(lambda:MainWindowController(self.window).ClickedPrevTrack())
 
 
 
@@ -326,9 +352,9 @@ class SearchBarWidget(QLineEdit):
 
      
     def find_update_objects_and_search(self):
-        objList = [SearchTextWidget, TrackTabel, AlbumsTabel, ArtistsTabel, PlaylistsTabel]
-        found_window_objs = find_Objects(self.window, objList)
-        MainWindowController().RunSearch(self.text(), found_window_objs)
+        # objList = [SearchTextWidget, TrackTabel, AlbumsTabel, ArtistsTabel, PlaylistsTabel]
+        # found_window_objs = find_Objects(self.window, objList)
+        MainWindowController(self.window).RunSearch(self.text())
 
 
 class SearchTextWidget(QLabel):
@@ -337,15 +363,18 @@ class SearchTextWidget(QLabel):
         self.widgetRow = widgetRow
         self.widgetCol = widgetCol
         
-
-        
-        
-        
-        
+    def somethingfunny(self):
+        print("SOMETHING FUNNY")
         
 
-
         
+        
+        
+        
+        
+
+
+from applicationTypes import TrackItem
 # class SuperItems():
 class TrackTableLabel(QLabel):
     def __init__(self, text="track_label", widgetRow = -1, widgetCol = -1):
@@ -364,12 +393,12 @@ class TrackTabel(QListWidget):
         
     def on_item_clicked(self, item: TrackItem):
         print(f"TrackObject: {item}")
-        MainWindowController().ClickedTrack(item)
+        MainWindowController(self.window).ClickedTrack(item)
         
-        found_objs = find_Objects(self.window, [TrackArtworkWidget, TrackTitle, PlayButtn])
-        found_objs[0].setImage(item.cover_url)
-        found_objs[1].setText(item.name)
-        found_objs[2].set_as_playing()
+        # found_objs = find_Objects(self.window, [TrackArtworkWidget, TrackTitle, PlayButtn])
+        # found_objs[0].setImage(item.cover_url)
+        # found_objs[1].setText(item.name)
+        # found_objs[2].set_as_playing()
 
 
 class AlbumsTableLabel(QLabel):
@@ -430,10 +459,10 @@ class PlaylistsTabel(QListWidget):
         
     def on_item_clicked(self, playlist_item):
         print(f"PlaylistObject: {playlist_item}")
-        found_objs = find_Objects(self.window, [PlaylistQueueLabel, PlaylistQueueTabel])
+        # found_objs = find_Objects(self.window, [PlaylistQueueLabel, PlaylistQueueTabel])
         # found_objs[0].setImage(item.cover_url)
         # found_objs[1].setText(item.name)
-        MainWindowController().ClickedPlaylist(playlist_item, found_objs)
+        MainWindowController(self.window).ClickedPlaylist(playlist_item)
 
 
 
@@ -455,10 +484,10 @@ class PlaylistQueueTabel(QListWidget):
         
     def on_item_clicked(self, item):
         print(f"TrackObject: {item}")
-        MainWindowController().ClickedTrack(item)
+        MainWindowController(self.window).ClickedTrack(item)
         
-        found_objs = find_Objects(self.window, [TrackArtworkWidget, TrackTitle, PlayButtn])
-        found_objs[0].setImage(item.cover_url)
-        found_objs[1].setText(item.name)
-        found_objs[2].set_as_playing()
+        # found_objs = find_Objects(self.window, [TrackArtworkWidget, TrackTitle, PlayButtn])
+        # found_objs[0].setImage(item.cover_url)
+        # found_objs[1].setText(item.name)
+        # found_objs[2].set_as_playing()
 

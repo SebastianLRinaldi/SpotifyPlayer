@@ -9,10 +9,12 @@ class Constants:
     
 
 class TrackItem(QListWidgetItem):
-    def __init__(self, name, artist, cover_url, id):
+    def __init__(self, name, artist, duration, popularity, cover_url, id):
         super().__init__("")
         self.name = name
         self.artist = artist
+        self.duration = duration
+        self.popularity = popularity
         self.cover_url = cover_url
         self.id = id
         self.setText(f"{name} - {artist} ({id})")
