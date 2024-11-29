@@ -95,6 +95,21 @@ class TrackInfoPanel(QWidget):
         
         self.setLayout(grid_layout)
         
+        
+class TrackDetailsPanel(QWidget):
+    def __init__(self,widgetRow = -1, widgetCol = -1):
+        super().__init__()
+        self.widgetRow = widgetRow
+        self.widgetCol = widgetCol
+        
+        grid_layout = GridLayout(
+            TrackArtworkWidget(),
+            TrackProgressWidget(),
+            TrackTitle()
+            )
+        
+        self.setLayout(grid_layout)
+        
 """
 Gets Updated by other elements and needs to access other UI elements
 """       

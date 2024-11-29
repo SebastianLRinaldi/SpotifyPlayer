@@ -109,54 +109,7 @@ class Button(QPushButton):
         self.widgetRow = widgetRow
         self.widgetCol = widgetCol
 
-# class BaseContainerWidget(QWidget):
-#     def __init__(self, text="Click me!"):
-#         super().__init__(text)
-        
-#     def init_main_ui(self):
-#         """
-#         https://www.pythonguis.com/tutorials/pyqt-layouts/
-#         """
-#         self.mainContainer = QGridLayout()
-#         self.mainContentWidget = QWidget()
-#         self.mainContentWidget.setLayout(self.mainContainer)
 
-#         self.userControlsContainer = QGridLayout()
-#         self.userControlsWidget = QWidget()
-#         self.userControlsWidget.setLayout(self.userControlsContainer)
-#         self.userControlsWidget.setStyleSheet("border: 1px solid white; border-radius: 15px;")
-
-#         # adds mainContentWidget to QMainWindow
-#         self.setCentralWidget(self.mainContentWidget) 
-#         # adds player controls to the mainContentContainer
-        
-#         # self.userControlsWidget.setMinimumHeight(int(self.mainContentWidget.height() * 1))
-#         self.mainContainer.addWidget(self.userControlsWidget, 0, 2, 6, 1)
-#         self.userControlsWidget.setMaximumWidth(int(self.mainContentWidget.width() * 0.5))
-#         # self.configure_main_interface()
-#         self.show()
-        
-
-# class UserControlWidget(QWidget):
-#     def __init__(self, text="Click me!"):
-#         super().__init__(text)
-    
-#     def userControls(self):
-#         """ This could be its own top bar"""
-#         self.top_bar_container = QHBoxLayout()
-#         self.top_bar = QWidget()
-#         self.top_bar.setLayout(self.top_bar_container)
-#         self.title_label = QLabel("Spotify")
-#         self.title_label.setStyleSheet("""
-#                                        font-size: 35px; 
-#                                        font-weight: bold; 
-#                                        background-color: #2c2c3b;
-#                                        """)
-#         self.top_bar_container.addWidget(self.title_label)
-#         self.userControlsContainer.addWidget(self.top_bar, 0, 0, 1, 2, Qt.AlignCenter)
-
-#         self.trackInfoPanel(1, 0, 1, 2)
-#         self.trackControls(2, 0, 1, 2)
 
 
 
@@ -166,26 +119,6 @@ class TrackTitle(QLabel):
         self.widgetRow = widgetRow
         self.widgetCol = widgetCol
 
-
-# class TrackInfoWidget(QWidget):
-    
-#     def __init__(self, text="Click me!"):
-#         super().__init__(text)
-        
-        
-#     def trackInfoPanel(self, row: int, column: int, rowSpan: int, columnSpan: int):
-#         self.trackInfoPanelContainer = QGridLayout()
-#         self.trackInfoPanelWidget = QWidget()
-#         self.trackInfoPanelWidget.setLayout(self.trackInfoPanelContainer)
-
-#         self.trackArtworkDisplay()
-
-#         # self.track_info = QLabel("No track selected")
-#         # self.trackInfoPanelContainer.addWidget(self.track_info, 0, 2, 1, 2, Qt.AlignCenter)
-
-#         self.trackProgress()
-
-#         self.userControlsContainer.addWidget(self.trackInfoPanelWidget, row, column, rowSpan, columnSpan)
 
 from TimingManager import *
 """
@@ -250,14 +183,6 @@ class TrackProgressWidget(QProgressBar):
         self.setValue(self.progress)
         self.timer.stop()  # Stop the timer when resetting the song
         
-    # def trackProgress(self):
-    #     self.loading_bar = QProgressBar()
-    #     self.loading_bar.setRange(0, 100)
-    #     self.loading_bar.setAlignment(Qt.AlignCenter)
-    #     # self.loading_bar.setOrientation(QtCore.Qt.Vertical)
-    #     self.loading_bar.setFormat(f"remaing: %p%")
-    #     self.loading_bar.setValue(0)
-    #     self.trackInfoPanelContainer.addWidget(self.loading_bar, 1, 1, 1, 3)
 from PyQt5.QtWidgets import QLabel
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import Qt
@@ -327,38 +252,15 @@ class TrackArtworkWidget(QLabel):
 
 
 
-        # self.trackInfoPanelContainer.addWidget(self.artwork_placeholder, 0, 0, 2, 2)
-        # self.artwork_placeholder.setMaximumHeight(int(self.userControlsWidget.height() * 0.25))
-        # self.artwork_placeholder.setMaximumWidth(int(self.userControlsWidget.width() * 0.25))
-
-# class TrackControlWidget(QWidget):
-#     def __init__(self, text="Click me!"):
-#         super().__init__(text)
-        
-#     def trackControls(self, row: int, column: int, rowSpan: int, columnSpan: int):
-
-#         self.userBtnControlsContainer = QGridLayout()
-#         self.userBtnControlsWidget = QWidget()
-#         self.userBtnControlsWidget.setLayout(self.userBtnControlsContainer)
-
-#         # self.button = QPushButton("Find Elm")
-#         # self.button.clicked.connect(start_spotify.mark_custom_elements)
-#         # self.userBtnControlsContainer.addWidget(self.button, 0, 0, 1, 2)
-
 class PlayButtn(QPushButton):
     def __init__(self, window: QMainWindow, text="PLAY", widgetRow = -1, widgetCol = -1):
         super().__init__(text)
         self.widgetRow = widgetRow
         self.widgetCol = widgetCol
-        # self.play_btn = QPushButton("PLAY")
-        # self.play_btn.clicked.connect(self.start_shadow_controls)
-        # self.userBtnControlsContainer.addWidget(self.play_btn, 1, 0, 1, 2)
-        # self.play_btn.setMaximumHeight(int(self.userBtnControlsWidget.height() * 0.65))
         self.is_playing = False
         self.window = window
         self.clicked.connect(lambda: self.on_item_clicked())
 
-     
     def on_item_clicked(self):
         MainWindowController().ClickedPlay()
         self.update_playbtn_state()
@@ -399,9 +301,6 @@ class NextTrackButtn(QPushButton):
         self.widgetRow = widgetRow
         self.widgetCol = widgetCol
         self.clicked.connect(lambda:MainWindowController().ClickedNextTrack())
-        # self.next_btn = QPushButton("NEXT")
-        # self.userBtnControlsContainer.addWidget(self.next_btn, 2, 1,1,1)
-        # self.next_btn.setMaximumHeight(int(self.userBtnControlsWidget.height() * 0.50))
 
 class PrevousTrackButtn(QPushButton):
     def __init__(self, text="PREV", widgetRow = -1, widgetCol = -1):
@@ -409,9 +308,6 @@ class PrevousTrackButtn(QPushButton):
         self.widgetRow = widgetRow
         self.widgetCol = widgetCol
         self.clicked.connect(lambda:MainWindowController().ClickedPrevTrack())
-        # self.prev_btn = QPushButton("PREV")
-        # self.userBtnControlsContainer.addWidget(self.prev_btn, 2, 0,1,1)
-        # self.prev_btn.setMaximumHeight(int(self.userBtnControlsWidget.height() * 0.50))
 
 
 
@@ -433,20 +329,7 @@ class SearchBarWidget(QLineEdit):
         objList = [SearchTextWidget, TrackTabel, AlbumsTabel, ArtistsTabel, PlaylistsTabel]
         found_window_objs = find_Objects(self.window, objList)
         MainWindowController().RunSearch(self.text(), found_window_objs)
-        
 
- 
-
-        
-        # return searchTextWidget
-    
-        
-        
-    # def searchBar(self):
-    #     self.search_input = QLineEdit()
-    #     self.search_input.setPlaceholderText("Search...")
-    #     self.search_input.returnPressed.connect(self.perform_search)
-    #     self.mainContainer.addWidget(self.search_input, 0, 0, 1, 2)
 
 class SearchTextWidget(QLabel):
     def __init__(self, text="Result will appear here", widgetRow = -1, widgetCol = -1):
@@ -454,8 +337,7 @@ class SearchTextWidget(QLabel):
         self.widgetRow = widgetRow
         self.widgetCol = widgetCol
         
-        # self.result_label = QLabel("Result will appear here")
-        # self.mainContainer.addWidget(self.result_label, 1, 0)
+
         
         
         
@@ -501,8 +383,7 @@ class AlbumsTabel(QListWidget):
         super().__init__()
         self.widgetRow = widgetRow
         self.widgetCol = widgetCol
-        # self.albumlist_widget = QListWidget()
-        # self.albumlist_widget.itemClicked.connect(self.ClickedAlbum)
+
         
         self.itemClicked.connect(self.on_item_clicked)
         
@@ -522,8 +403,7 @@ class ArtistsTabel(QListWidget):
         super().__init__()
         self.widgetRow = widgetRow
         self.widgetCol = widgetCol
-        # self.artistslist_widget = QListWidget()
-        # self.artistslist_widget.itemClicked.connect(self.Clicked)
+
         
         self.itemClicked.connect(self.on_item_clicked)
         

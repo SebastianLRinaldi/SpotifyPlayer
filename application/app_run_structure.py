@@ -77,6 +77,9 @@ def run():
                 PlayerControls(window),
                 title="Player Panel")
     
+    playTab.add_widges_to_tab(
+                title="Track Details")
+    
     window.setup_central_widget(
         exploreTab,
         playTab,
