@@ -13,6 +13,7 @@ class UIElementFinder():
         self.window = window
         pass
     
+    """Change this to list of str"""
     def find_Objects(self, widgetsToFind: list[QObject]):
         found_window_objs = []
         for obj in widgetsToFind:
@@ -26,7 +27,7 @@ class UIElementFinder():
         return found_window_objs
     
     
-    
+    """Change these below to be just widgets to find and get rid of the window"""
     
     
     
