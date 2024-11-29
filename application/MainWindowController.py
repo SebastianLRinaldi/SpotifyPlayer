@@ -74,6 +74,8 @@ class MainWindowController():
     def ClickedTrack(self, item):
         track_id = item.id
         SpotifyWebViewController().load_song('track', track_id)
+        self.ClickedPlay()
+        
 
 
     def ClickedPlaylist(self, playlist_item, objects_to_update: List[QObject]):

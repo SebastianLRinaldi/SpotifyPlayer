@@ -360,8 +360,23 @@ class PlayButtn(QPushButton):
 
      
     def on_item_clicked(self):
-        found_window_objs = find_anObject(self.window, TrackProgressWidget)
         MainWindowController().ClickedPlay()
+        self.update_playbtn_state()
+        
+    def set_as_playing(self):
+        found_window_objs = find_anObject(self.window, TrackProgressWidget)
+        self.is_playing = True
+        self.setText("PAUSE")
+        found_window_objs.play()
+        
+    def set_as_paused(self):
+        found_window_objs = find_anObject(self.window, TrackProgressWidget)
+        self.is_playing = False
+        self.setText("PLAY")
+        found_window_objs.pause()
+    
+    def update_playbtn_state(self):
+        
         """
         if self.is_playing is True: when clicked
             pause the song
@@ -374,13 +389,9 @@ class PlayButtn(QPushButton):
             when clicked next
         """
         if self.is_playing:
-            self.is_playing = False
-            self.setText("PLAY")
-            found_window_objs.pause()
+            self.set_as_paused()
         else:
-            self.is_playing = True
-            self.setText("PAUSE")
-            found_window_objs.play()
+            self.set_as_playing()
             
 class NextTrackButtn(QPushButton):
     def __init__(self, text="NEXT", widgetRow = -1, widgetCol = -1):
@@ -473,9 +484,10 @@ class TrackTabel(QListWidget):
         print(f"TrackObject: {item}")
         MainWindowController().ClickedTrack(item)
         
-        found_objs = find_Objects(self.window, [TrackArtworkWidget, TrackTitle])
+        found_objs = find_Objects(self.window, [TrackArtworkWidget, TrackTitle, PlayButtn])
         found_objs[0].setImage(item.cover_url)
         found_objs[1].setText(item.name)
+        found_objs[2].set_as_playing()
 
 
 class AlbumsTableLabel(QLabel):
@@ -581,7 +593,8 @@ class PlaylistQueueTabel(QListWidget):
         print(f"TrackObject: {item}")
         MainWindowController().ClickedTrack(item)
         
-        found_objs = find_Objects(self.window, [TrackArtworkWidget, TrackTitle])
+        found_objs = find_Objects(self.window, [TrackArtworkWidget, TrackTitle, PlayButtn])
         found_objs[0].setImage(item.cover_url)
         found_objs[1].setText(item.name)
+        found_objs[2].set_as_playing()
 

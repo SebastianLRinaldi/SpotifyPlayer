@@ -109,60 +109,78 @@ class SpotifyWebViewController:
         return (progress_number_result)
 
     def click_play_btn(self):
-        element, selector = WebviewDOM().find_element('[data-testid="play-pause-button"]')
 
-        if element is not None:
-            print("Found element:", element.tag)
+        iteration_count = 0
+        max_iterations = 20  # Maximum number of attempts
+        element = None
+        while iteration_count < max_iterations and element is None:
+            iteration_count += 1
             
-            # Add button click functionality
-            js_code = f'''
-            var element = document.querySelector('{selector}');
+            # Your action here
+            print(f"Checking iteration {iteration_count}")
+            
+            element, selector = WebviewDOM().find_element('[data-testid="play-pause-button"]')
 
-            element.click();
-            '''
-            # Execute the JavaScript code
-            result = webview.windows[0].evaluate_js(js_code)
-        
-        else:
-            print("Play btn Element not found")
+            if element is not None:
+                print("Found element:", element.tag)
+                
+                # Add button click functionality
+                js_code = f'''
+                var element = document.querySelector('{selector}');
+
+                element.click();
+                '''
+                # Execute the JavaScript code
+                result = webview.windows[0].evaluate_js(js_code)
+            else:
+                print(f"Contining to Find Play Button | {iteration_count} out of {max_iterations}")
+                time.sleep(0.25)
+            # If not found, continue with next iteration
+
+        if iteration_count == max_iterations:
+            print("Element not found after maximum attempts")
+
+
             
             
     def click_next_track_btn(self):
-        self.mark_important_elements()
-        element, selector = WebviewDOM().find_element('[data-testid="control-button-skip-forward"]')
+        pass
+        # self.mark_important_elements()
+        # element, selector = WebviewDOM().find_element('[data-testid="control-button-skip-forward"]')
 
-        if element is not None:
-            print("Found element:", element.tag)
+        # if element is not None:
+        #     print("Found element:", element.tag)
             
-            # Add button click functionality
-            js_code = f'''
-            var element = document.querySelector('{selector}');
+        #     # Add button click functionality
+        #     js_code = f'''
+        #     var element = document.querySelector('{selector}');
 
-            element.click();
-            '''
-            # Execute the JavaScript code
-            result = webview.windows[0].evaluate_js(js_code)
+        #     element.click();
+        #     '''
+        #     # Execute the JavaScript code
+        #     result = webview.windows[0].evaluate_js(js_code)
         
-        else:
-            print("Play btn Element not found")
+        # else:
+        #     print("Play btn Element not found")
             
     def click_prev_track_btn(self):
-        element, selector = WebviewDOM().find_element('[data-testid="control-button-skip-back"]')
+        pass
+        # element, selector = WebviewDOM().find_element('[data-testid="control-button-skip-back"]')
 
-        if element is not None:
-            print("Found element:", element.tag)
+        # if element is not None:
+        #     print("Found element:", element.tag)
             
-            # Add button click functionality
-            js_code = f'''
-            var element = document.querySelector('{selector}');
+        #     # Add button click functionality
+        #     js_code = f'''
+        #     var element = document.querySelector('{selector}');
 
-            element.click();
-            '''
-            # Execute the JavaScript code
-            result = webview.windows[0].evaluate_js(js_code)
+        #     element.click();
+        #     '''
+        #     # Execute the JavaScript code
+        #     result = webview.windows[0].evaluate_js(js_code)
         
-        else:
-            print("Play btn Element not found")
+        # else:
+        #     print("Play btn Element not found")
         
             
     # def get_artwork(self):
