@@ -61,7 +61,7 @@ class SearchManager:
         self.playlists = results['playlists']['items']
     
         
-    def clear_all_result_objs(self, objects_to_update: List[QObject]):
+    def clear_all_objs(self, objects_to_update: List[QObject]):
         for obj in objects_to_update:
             obj.clear()
         
@@ -132,7 +132,7 @@ class SearchManager:
 
     def perform_search(self, search_query, objects_to_update: List[QObject]):
             
-            self.clear_all_result_objs(objects_to_update)
+            self.clear_all_objs(objects_to_update)
             
             # search_text = objects_to_update[0]
             tracks_table = objects_to_update[1]
@@ -204,7 +204,7 @@ class SearchManager:
             """
             Seperat Button on queue tab that will have this function to clear the queue
             """
-            # self.clear_all_result_objs(objects_to_update)
+            self.clear_all_objs(objects_to_update)
             
             playlist_title = objects_to_update[0]
             playlist_title.setText(playlist_item.name)

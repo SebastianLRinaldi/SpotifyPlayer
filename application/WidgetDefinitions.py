@@ -555,22 +555,6 @@ class PlaylistsTabel(QListWidget):
         # found_objs[1].setText(item.name)
         MainWindowController().ClickedPlaylist(playlist_item, found_objs)
 
-        
-        # self.playlistlist_widget = QListWidget()
-        # self.playlistlist_widget.itemClicked.connect(self.ClickedPlaylist)
-
-        # self.mainContainer.addWidget(self.track_label, 2, 0)
-        # self.mainContainer.addWidget(self.tracklist_widget, 3, 0)
-
-        # self.mainContainer.addWidget(self.album_label, 2, 1)
-        # self.mainContainer.addWidget(self.albumlist_widget, 3, 1)
-
-        # self.mainContainer.addWidget(self.artists_label, 4, 0)
-        # self.mainContainer.addWidget(self.artistslist_widget, 5, 0)
-
-        # self.mainContainer.addWidget(self.playlist_label, 4, 1)
-        # self.mainContainer.addWidget(self.playlistlist_widget, 5, 1)
-
 
 
 class PlaylistQueueLabel(QLabel):

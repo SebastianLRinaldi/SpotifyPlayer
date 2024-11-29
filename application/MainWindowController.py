@@ -82,7 +82,9 @@ class MainWindowController():
         playlist_id = playlist_item.id
         SpotifyWebViewController().load_song('playlist', playlist_id)
         SearchManager().perform_queue_loading(playlist_item, objects_to_update)
-        
+        # Programmatically click an item
+        item_index = 1  # Index of the item you want to click (0-based)
+        objects_to_update[1].itemClicked.emit(objects_to_update[1].item(item_index))
         
         """
         Once queue table is loaded
