@@ -81,6 +81,7 @@ class SpotifyWebViewController:
         if song_type == 'track':
             return f"https://open.spotify.com/embed/track/{song_id}"
         elif song_type == 'playlist':
+            print(f"https://open.spotify.com/embed/playlist/{song_id}?utm_source=generator&theme=0")
             return f"https://open.spotify.com/embed/playlist/{song_id}?utm_source=generator&theme=0"
         elif song_type == 'album':
             return f"https://open.spotify.com/embed/album/{song_id}?utm_source=generator&theme=0"

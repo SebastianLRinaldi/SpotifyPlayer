@@ -42,7 +42,7 @@ class Window(QMainWindow):
         super().__init__()
         self.setWindowTitle("My Window")
         self.resize(400, 300)
-        self.setup_central_widget()
+
 
     def setup_central_widget(self, *widgets):
         grid_layout = GridLayout(*widgets)
@@ -53,20 +53,73 @@ class Window(QMainWindow):
         self.show()
         
 
+
+
 def run():
     app = QApplication(sys.argv)
     window = Window()
     
+    exploreTab = Tab(window, widgetRow=0, widgetCol=0)
+    playTab = Tab(window, widgetRow=0, widgetCol=1)
+    
+    exploreTab.add_widges_to_tab(
+                SearchBar(window), 
+                SearchResultsTables(window),
+                title="Search")
+    
+    exploreTab.add_widges_to_tab(
+                PlayerQueue(window), 
+                title="Queue")
+    
+    
+    playTab.add_widges_to_tab(
+                TrackInfoPanel(),
+                PlayerControls(window),
+                title="Player Panel")
+    
     window.setup_central_widget(
-        SearchBar(window),
-        SearchResultsTables(window),
-        TrackInfoPanel(),
-        PlayerControls(window),
-        
+        exploreTab,
+        playTab,
     )
     
     window.show_window()
-    app.exec_()       
+    app.exec_()     
+
+
+# class Window(QMainWindow):
+#     def __init__(self):
+#         super().__init__()
+#         self.setWindowTitle("My Window")
+#         self.resize(400, 300)
+
+
+#     def setup_central_widget(self, *widgets):
+#         grid_layout = GridLayout(*widgets)
+#         central_widget = Widget(grid_layout)
+#         self.setCentralWidget(central_widget)
+
+#     def show_window(self):
+#         self.show()
+
+
+# def run():
+#     app = QApplication(sys.argv)
+#     window = Window()
+    
+#     window.setup_central_widget(
+#         SearchBar(window),
+#         SearchResultsTables(window),
+
+#         PlayerQueue(window),
+
+#         TrackInfoPanel(),
+#         PlayerControls(window),
+
+        
+#     )
+    
+#     window.show_window()
+#     app.exec_()       
     
 def main():
     qt_thread = threading.Thread(target=run)

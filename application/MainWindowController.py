@@ -28,7 +28,8 @@ from spotipy.oauth2 import SpotifyOAuth
 
 
 from SpotifyWebViewController import *
-
+from SearchManager import *
+# from WidgetDefinitions import *
 
 
 # start QT application
@@ -52,12 +53,14 @@ class MainWindowController():
         # self.artwork_placeholder.setMinimumWidth(int(self.userControlsWidget.height() * 0.20))
         self.userBtnControlsWidget.setMinimumHeight(int(self.userControlsWidget.height() * 0.60))
 
+    def RunSearch(self, query: str, objects_to_update: List[QObject]):
+        SearchManager().perform_search(query, objects_to_update)
+    
     """
     This should be a function within playButton widget?
     """
     def ClickedPlay(self):
         SpotifyWebViewController().click_play_btn()
-
 
 
     def ClickedNextTrack(self):
@@ -73,9 +76,20 @@ class MainWindowController():
         SpotifyWebViewController().load_song('track', track_id)
 
 
-    def ClickedPlaylist(self, item):
-        playlist_id = item.id
+    def ClickedPlaylist(self, playlist_item, objects_to_update: List[QObject]):
+        playlist_id = playlist_item.id
         SpotifyWebViewController().load_song('playlist', playlist_id)
+        SearchManager().perform_queue_loading(playlist_item, objects_to_update)
+        
+        
+        """
+        Once queue table is loaded
+        - Maybe switch tabs
+        - maybe play first song
+        - maybe play random song?
+        """
+        
+
 
 
     def ClickedAlbum(self, item):
@@ -88,16 +102,12 @@ class MainWindowController():
         print(f"{album_id} Does nothing when clicked rn")
         # SpotifyWebViewController().load_song('album', album_id)
 
-    # def startSpotify(self):
-    #     pass
-    #         # Open the webview window after the button is clicked
-    #         # self.queue.put("open_spotify_application")
-
     def get_song_progress(self):
         value = SpotifyWebViewController().track_progress()
         return value
     
-
+    
+    
     def destroy_spotify_webview(self):
         # show the window for a few seconds before destroying it:
         # time.sleep(5)
@@ -109,35 +119,7 @@ class MainWindowController():
         else:
             print("Window already Destoryed.")
 
-    # def listen_for_instructions(self):
-    #     while True:
-    #         instruction = self.queue.get()
-    #         if instruction == "kill_spotify_application":
-    #             self.on_spotify_kill()
-    #         elif instruction == "spotify_application_webview_on":
-    #             self.kill_button.show()
-    #         elif instruction == "spotify_application_DOM_loaded":
-    #             self.show_button.show()
 
-
-
-# class UIManager:
-#     def __init__(self):
-#         self.main_window = MainWindow()
-
-#     def create_ui(self):
-#         self.main_window.setup_window()
-#         self.main_window.setup_stylesheets()
-#         self.main_window.setup_spotify_auth()
-#         self.main_window.setup_timer()
-#         self.main_window.init_main_ui()
-
-#     def update_ui(self):
-#         self.main_window.update_progress_bar()
-#         self.main_window.update_track_info()
-
-#     def refresh_ui(self):
-#         self.main_window.refresh_search_results()
 
 
 

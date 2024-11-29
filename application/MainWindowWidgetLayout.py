@@ -50,8 +50,10 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QHB
 Gets Updated by other elements and needs to access other UI elements
 """
 class PlayerControls(QWidget):
-    def __init__(self, window: QMainWindow,):
+    def __init__(self, window: QMainWindow, widgetRow = -1, widgetCol = -1):
         super().__init__()
+        self.widgetRow = widgetRow
+        self.widgetCol = widgetCol
         
         grid_layout = GridLayout(
             PlayButtn(window),
@@ -60,13 +62,30 @@ class PlayerControls(QWidget):
             )
         
         self.setLayout(grid_layout)
+        
+        
+        
+class PlayerQueue(QWidget):
+    def __init__(self, window: QMainWindow, widgetRow = -1, widgetCol = -1):
+        super().__init__()
+        self.widgetRow = widgetRow
+        self.widgetCol = widgetCol
+        
+        grid_layout = GridLayout(
+            PlaylistQueueLabel(),
+            PlaylistQueueTabel(window)
+            )
+        
+        self.setLayout(grid_layout)
 
 """
 Gets Updated by other elements but don't need to access other UI elements
 """      
 class TrackInfoPanel(QWidget):
-    def __init__(self):
+    def __init__(self,widgetRow = -1, widgetCol = -1):
         super().__init__()
+        self.widgetRow = widgetRow
+        self.widgetCol = widgetCol
         
         grid_layout = GridLayout(
             TrackArtworkWidget(),
@@ -80,8 +99,10 @@ class TrackInfoPanel(QWidget):
 Gets Updated by other elements and needs to access other UI elements
 """       
 class SearchBar(QWidget):
-    def __init__(self, window: QMainWindow):
+    def __init__(self, window: QMainWindow, widgetRow = 0, widgetCol = 0):
         super().__init__()
+        self.widgetRow = widgetRow
+        self.widgetCol = widgetCol
         
         grid_layout = GridLayout(
             SearchBarWidget(window),
@@ -94,18 +115,23 @@ class SearchBar(QWidget):
 Gets Updated by other elements and needs to access other UI elements
 """
 class SearchResultsTables(QWidget):
-    def __init__(self, window: QMainWindow):
+    def __init__(self, window: QMainWindow, widgetRow = -1, widgetCol = -1):
         super().__init__()
+        self.widgetRow = widgetRow
+        self.widgetCol = widgetCol
         
         grid_layout = GridLayout(
-            TrackTableLabel(),
-            TrackTabel(window),
-            AlbumsTableLabel(),
-            AlbumsTabel(window),
-            ArtistsTableLabel(),
-            ArtistsTabel(window),
-            PlaylistsTableLabel(),
-            PlaylistsTabel(window),
+            TrackTableLabel(widgetRow = 0, widgetCol = 0),
+            TrackTabel(window, widgetRow = 1, widgetCol = 0),
+            
+            AlbumsTableLabel(widgetRow = 0, widgetCol = 1),
+            AlbumsTabel(window, widgetRow = 1, widgetCol = 1),
+            
+            ArtistsTableLabel(widgetRow = 2, widgetCol = 0),
+            ArtistsTabel(window, widgetRow = 3, widgetCol = 0),
+            
+            PlaylistsTableLabel(widgetRow = 2, widgetCol = 1),
+            PlaylistsTabel(window, widgetRow = 3, widgetCol = 1),
             )
         
         self.setLayout(grid_layout)       
@@ -113,14 +139,46 @@ class SearchResultsTables(QWidget):
         
 '''
 Layout controlers
-'''      
+'''
+class Tab(QTabWidget):
+    def __init__(self, window: QMainWindow, widgetRow = -1, widgetCol = -1):
+        super().__init__()
+        self.parent = window
+        self.widgetRow = widgetRow
+        self.widgetCol = widgetCol
+        
+    def add_widges_to_tab(self, *widgets, title="New Tab"):
+        new_tab = QWidget()
+        layout = QGridLayout(new_tab)
+        
+        for i, widget in enumerate(widgets):
+            widgetRow = widget.widgetRow #i // 1
+            widgetCol = widget.widgetCol#i % 1
+            
+            print(f'Tab: {type(widget)}')
+            if widgetRow == -1 or widgetCol == -1:
+                widgetRow = i // 1
+                widgetCol = i % 1
+                layout.addWidget(widget, widgetRow, widgetCol)
+            else:
+                layout.addWidget(widget, widgetRow, widgetCol)
+            
+        self.addTab(new_tab, title)
+
 class GridLayout(QGridLayout):
     def __init__(self, *widgets):
         super().__init__()  # No arguments here
         for i, widget in enumerate(widgets):
-            row = i // 1
-            col = i % 1
-            self.addWidget(widget, row, col)
+            widgetRow = widget.widgetRow #i // 1
+            widgetCol = widget.widgetCol#i % 1
+            
+            print(f'{type(widget)}')
+            if widgetRow == -1 or widgetCol == -1:
+                widgetRow = i // 1
+                widgetCol = i % 1
+                self.addWidget(widget, widgetRow, widgetCol)
+            else:
+                self.addWidget(widget, widgetRow, widgetCol)
 
 class Widget(QWidget):
     def __init__(self, layout=None):
@@ -128,4 +186,6 @@ class Widget(QWidget):
         if layout:
             self.setLayout(layout)
 
+
+    
 

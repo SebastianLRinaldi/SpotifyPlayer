@@ -104,8 +104,10 @@ class WindowStyle:
 
 
 class Button(QPushButton):
-    def __init__(self, text="Click me!"):
+    def __init__(self, text="Click me!", widgetRow = -1, widgetCol = -1):
         super().__init__(text)
+        self.widgetRow = widgetRow
+        self.widgetCol = widgetCol
 
 # class BaseContainerWidget(QWidget):
 #     def __init__(self, text="Click me!"):
@@ -159,8 +161,10 @@ class Button(QPushButton):
 
 
 class TrackTitle(QLabel):
-    def __init__(self, text="No track selected"):
-            super().__init__(text)
+    def __init__(self, text="No track selected", widgetRow = -1, widgetCol = -1):
+        super().__init__(text)
+        self.widgetRow = widgetRow
+        self.widgetCol = widgetCol
 
 
 # class TrackInfoWidget(QWidget):
@@ -193,8 +197,10 @@ from MainWindowController import *
    
 class TrackProgressWidget(QProgressBar):
     
-    def __init__(self):
+    def __init__(self, widgetRow = -1, widgetCol = -1):
         super().__init__()
+        self.widgetRow = widgetRow
+        self.widgetCol = widgetCol
         self.setRange(0, 100)
         self.setAlignment(Qt.AlignCenter)
         # self.loading_bar.setOrientation(QtCore.Qt.Vertical)
@@ -258,8 +264,10 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtNetwork import QNetworkAccessManager, QNetworkRequest, QNetworkReply
 
 class TrackArtworkWidget(QLabel): 
-    def __init__(self, text="Click me!"):
+    def __init__(self, text="Click me!", widgetRow = -1, widgetCol = -1):
         super().__init__(text)
+        self.widgetRow = widgetRow
+        self.widgetCol = widgetCol
         
 
         self.setFixedSize(200, 200)
@@ -338,8 +346,10 @@ class TrackArtworkWidget(QLabel):
 #         # self.userBtnControlsContainer.addWidget(self.button, 0, 0, 1, 2)
 
 class PlayButtn(QPushButton):
-    def __init__(self, window: QMainWindow, text="PLAY"):
+    def __init__(self, window: QMainWindow, text="PLAY", widgetRow = -1, widgetCol = -1):
         super().__init__(text)
+        self.widgetRow = widgetRow
+        self.widgetCol = widgetCol
         # self.play_btn = QPushButton("PLAY")
         # self.play_btn.clicked.connect(self.start_shadow_controls)
         # self.userBtnControlsContainer.addWidget(self.play_btn, 1, 0, 1, 2)
@@ -373,16 +383,20 @@ class PlayButtn(QPushButton):
             found_window_objs.play()
             
 class NextTrackButtn(QPushButton):
-    def __init__(self, text="NEXT"):
+    def __init__(self, text="NEXT", widgetRow = -1, widgetCol = -1):
         super().__init__(text)
+        self.widgetRow = widgetRow
+        self.widgetCol = widgetCol
         self.clicked.connect(lambda:MainWindowController().ClickedNextTrack())
         # self.next_btn = QPushButton("NEXT")
         # self.userBtnControlsContainer.addWidget(self.next_btn, 2, 1,1,1)
         # self.next_btn.setMaximumHeight(int(self.userBtnControlsWidget.height() * 0.50))
 
 class PrevousTrackButtn(QPushButton):
-    def __init__(self, text="PREV"):
+    def __init__(self, text="PREV", widgetRow = -1, widgetCol = -1):
         super().__init__(text)
+        self.widgetRow = widgetRow
+        self.widgetCol = widgetCol
         self.clicked.connect(lambda:MainWindowController().ClickedPrevTrack())
         # self.prev_btn = QPushButton("PREV")
         # self.userBtnControlsContainer.addWidget(self.prev_btn, 2, 0,1,1)
@@ -393,11 +407,13 @@ class PrevousTrackButtn(QPushButton):
 
 
 
-from SearchManager import *
+
         
 class SearchBarWidget(QLineEdit):
-    def __init__(self, window: QMainWindow, text="Search..."):
+    def __init__(self, window: QMainWindow, text="Search...", widgetRow = -1, widgetCol = -1):
         super().__init__(text)
+        self.widgetRow = widgetRow
+        self.widgetCol = widgetCol
         self.window = window
         self.returnPressed.connect(lambda: self.find_update_objects_and_search())
 
@@ -405,7 +421,7 @@ class SearchBarWidget(QLineEdit):
     def find_update_objects_and_search(self):
         objList = [SearchTextWidget, TrackTabel, AlbumsTabel, ArtistsTabel, PlaylistsTabel]
         found_window_objs = find_Objects(self.window, objList)
-        SearchManager().perform_search(self.text(), found_window_objs)
+        MainWindowController().RunSearch(self.text(), found_window_objs)
         
 
  
@@ -422,8 +438,10 @@ class SearchBarWidget(QLineEdit):
     #     self.mainContainer.addWidget(self.search_input, 0, 0, 1, 2)
 
 class SearchTextWidget(QLabel):
-    def __init__(self, text="Result will appear here"):
+    def __init__(self, text="Result will appear here", widgetRow = -1, widgetCol = -1):
         super().__init__(text)
+        self.widgetRow = widgetRow
+        self.widgetCol = widgetCol
         
         # self.result_label = QLabel("Result will appear here")
         # self.mainContainer.addWidget(self.result_label, 1, 0)
@@ -437,18 +455,22 @@ class SearchTextWidget(QLabel):
         
 # class SuperItems():
 class TrackTableLabel(QLabel):
-    def __init__(self, text="track_label"):
+    def __init__(self, text="track_label", widgetRow = -1, widgetCol = -1):
         super().__init__(text)
+        self.widgetRow = widgetRow
+        self.widgetCol = widgetCol
         
 class TrackTabel(QListWidget):
-    def __init__(self, window: QMainWindow,):
+    def __init__(self, window: QMainWindow, widgetRow = -1, widgetCol = -1):
         super().__init__()
+        self.widgetRow = widgetRow
+        self.widgetCol = widgetCol
         self.window = window #"""Check if we can just do self.window"""
 
         self.itemClicked.connect(self.on_item_clicked)
         
     def on_item_clicked(self, item: TrackItem):
-        print(f"SONGID: {item}")
+        print(f"TrackObject: {item}")
         MainWindowController().ClickedTrack(item)
         
         found_objs = find_Objects(self.window, [TrackArtworkWidget, TrackTitle])
@@ -457,54 +479,69 @@ class TrackTabel(QListWidget):
 
 
 class AlbumsTableLabel(QLabel):
-    def __init__(self, text="album_label"):
+    def __init__(self, text="album_label", widgetRow = -1, widgetCol = -1):
         super().__init__(text)
+        self.widgetRow = widgetRow
+        self.widgetCol = widgetCol
         
 class AlbumsTabel(QListWidget):
-    def __init__(self, window: QMainWindow,):
+    def __init__(self, window: QMainWindow, widgetRow = -1, widgetCol = -1):
         super().__init__()
+        self.widgetRow = widgetRow
+        self.widgetCol = widgetCol
         # self.albumlist_widget = QListWidget()
         # self.albumlist_widget.itemClicked.connect(self.ClickedAlbum)
         
         self.itemClicked.connect(self.on_item_clicked)
         
     def on_item_clicked(self, item):
-        print(f"AlbID: {item}")
+        print(f"AlbumObject: {item}")
         MainWindowController().ClickedAlbum(item)
 
 
 class ArtistsTableLabel(QLabel):
-    def __init__(self, text="artists_label"):
+    def __init__(self, text="artists_label", widgetRow = -1, widgetCol = -1):
         super().__init__(text)
+        self.widgetRow = widgetRow
+        self.widgetCol = widgetCol
 
 class ArtistsTabel(QListWidget):
-    def __init__(self, window: QMainWindow,):
+    def __init__(self, window: QMainWindow, widgetRow = -1, widgetCol = -1):
         super().__init__()
+        self.widgetRow = widgetRow
+        self.widgetCol = widgetCol
         # self.artistslist_widget = QListWidget()
         # self.artistslist_widget.itemClicked.connect(self.Clicked)
         
         self.itemClicked.connect(self.on_item_clicked)
         
     def on_item_clicked(self, item):
-        print(f"ArtID: {item}")
+        print(f"ArtistObject: {item}")
         MainWindowController().ClickedArtist(item)
 
 
 
 
 class PlaylistsTableLabel(QLabel):
-    def __init__(self, text="playlist_label"):
+    def __init__(self, text="playlist_label", widgetRow = -1, widgetCol = -1):
         super().__init__(text)
+        self.widgetRow = widgetRow
+        self.widgetCol = widgetCol
         
 class PlaylistsTabel(QListWidget):
-    def __init__(self, window: QMainWindow):
+    def __init__(self, window: QMainWindow, widgetRow = -1, widgetCol = -1):
         super().__init__()
-        
+        self.widgetRow = widgetRow
+        self.widgetCol = widgetCol
+        self.window = window
         self.itemClicked.connect(self.on_item_clicked)
         
-    def on_item_clicked(self, item):
-        print(f"PlaylistID: {item}")
-        MainWindowController().ClickedPlaylist(item)
+    def on_item_clicked(self, playlist_item):
+        print(f"PlaylistObject: {playlist_item}")
+        found_objs = find_Objects(self.window, [PlaylistQueueLabel, PlaylistQueueTabel])
+        # found_objs[0].setImage(item.cover_url)
+        # found_objs[1].setText(item.name)
+        MainWindowController().ClickedPlaylist(playlist_item, found_objs)
 
         
         # self.playlistlist_widget = QListWidget()
@@ -524,4 +561,27 @@ class PlaylistsTabel(QListWidget):
 
 
 
+class PlaylistQueueLabel(QLabel):
+    def __init__(self, text="current_playlist_title", widgetRow = -1, widgetCol = -1):
+        super().__init__(text)
+        self.widgetRow = widgetRow
+        self.widgetCol = widgetCol
+        
+class PlaylistQueueTabel(QListWidget):
+    def __init__(self, window: QMainWindow, widgetRow = -1, widgetCol = -1):
+        super().__init__()
+        self.widgetRow = widgetRow
+        self.widgetCol = widgetCol
+        
+        self.window = window
+        
+        self.itemClicked.connect(self.on_item_clicked)
+        
+    def on_item_clicked(self, item):
+        print(f"TrackObject: {item}")
+        MainWindowController().ClickedTrack(item)
+        
+        found_objs = find_Objects(self.window, [TrackArtworkWidget, TrackTitle])
+        found_objs[0].setImage(item.cover_url)
+        found_objs[1].setText(item.name)
 
