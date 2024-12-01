@@ -33,7 +33,9 @@ import threading
 
 
 """
-This needs to be in the app_strucuter file instead of the layouts file
+Should add a current duration timmer on player panel 
+Should show album/playlist title on player alumb or show that its a playlist?
+or at least its loaded and playing from the queue
 """
 from MainWindowWidgetLayout import *
 

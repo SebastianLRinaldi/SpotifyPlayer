@@ -105,6 +105,7 @@ class SpotifyWebViewController:
             progress_as_float = float(value_stripped)
             progress_as_int = int(progress_as_float)
             print(progress_as_int)
+            print(progress_as_float)
             progress_number_result = progress_as_int
         return (progress_number_result)
 

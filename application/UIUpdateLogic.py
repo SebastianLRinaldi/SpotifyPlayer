@@ -5,7 +5,10 @@ from WidgetDefinitions import *
 # from UIElementFinder import *
 from applicationTypes import *
 
-
+"""
+Should just overload the method or make it so that I can do a list or just any amount of args like arg**, or widgets**
+Move these over to the UiElements file when done for readablity
+"""
 def find_Objectss(window: QMainWindow, widgetsToFind: list[QObject]):
     found_window_objs = []
     for obj in widgetsToFind:
