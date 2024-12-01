@@ -9,18 +9,18 @@ class Constants:
     
 
 class TrackItem(QListWidgetItem):
-    def __init__(self, name, artist, duration, popularity, cover_url, id):
+    def __init__(self, title, artist, duration, popularity, cover_url, id):
         super().__init__("")
-        self.name = name
+        self.title = title
         self.artist = artist
         self.duration = duration
         self.popularity = popularity
         self.cover_url = cover_url
         self.id = id
-        self.setText(f"{name} - {artist} ({id})")
+        self.setText(f"{title} - {artist} ({id})")
         
     def __str__(self):
-        return f"<TrackItem '{self.name}' by {self.artist}, ID: {self.id} | IMG:{self.cover_url} >"
+        return f"<TrackItem '{self.title}' by {self.artist}, ID: {self.id} | IMG:{self.cover_url} >"
     
 
 class AlbumItem(QListWidgetItem):

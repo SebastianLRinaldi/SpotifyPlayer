@@ -28,7 +28,7 @@ import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 from typing import List
 from dotenv import load_dotenv
-
+from datetime import timedelta
 
 
 class SearchManager:
@@ -64,7 +64,20 @@ class SearchManager:
     def clear_all_objs(self, objects_to_update: List[QObject]):
         for obj in objects_to_update:
             obj.clear()
+            
+    def convert_ms_to_hms(self, ms):
+        # Create a timedelta object using the milliseconds
+        td = timedelta(milliseconds=ms)
         
+        # Format the timedelta to hours:minutes:seconds
+        result = str(td)  # This will return a string in the format 'H:MM:SS'
+        
+        # If the time is less than an hour, it will display in 'MM:SS', so we'll format that
+        if result.startswith("0:"):
+            result = result[2:]  # Strip the leading '0:' for times less than an hour
+        
+        return result
+
     def add_track_items_to_table(self, tableToUpdate: QListWidget):
         try:
             # Tracks loop
@@ -85,7 +98,7 @@ class SearchManager:
                 
                 name = track['name']
                 artist = track['artists'][0]['name']
-                duration = track['duration_ms']
+                duration = self.convert_ms_to_hms(track['duration_ms'])
                 popularity = track['popularity']
                 cover_url = track['album']['images'][1]['url']
                 track_id = track['id']
@@ -203,8 +216,8 @@ class SearchManager:
                 track_root = track["track"]
                 name = track_root['name'] 
                 artist = track_root['artists'][0]['name']
-                duration = track_root['duration_ms']
-                popularity = track_root['popularity']
+                duration = self.convert_ms_to_hms(track_root['duration_ms'])
+                popularity = str(track_root['popularity'])
                 cover_url = track_root['album']['images'][1]['url']
                 track_id = track_root['id']
                 found_item = TrackItem(name, artist, duration, popularity, cover_url, track_id)

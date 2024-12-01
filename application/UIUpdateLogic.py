@@ -34,27 +34,23 @@ class UIUpdateLogic():
                 obj.setImage(item.cover_url)
                 
             elif isinstance(obj, TrackTitle):
-                obj.setText(item.name)
+                obj.setText(f"Title: {item.title}")
             
             elif isinstance(obj, TrackArtist):
-                obj.setText(item.artist)
+                obj.setText(f"Artist: {item.artist}")
             
             elif isinstance(obj, TrackID):
-                obj.setText(item.id)
+                obj.setText(f"TrackID: {item.id}")
                 
             elif isinstance(obj, TrackDuration):
-                obj.setText(str(item.duration))
+                obj.setText(f"Duration: {item.duration}")
                 
             elif isinstance(obj, TrackPopularity):
-                obj.setText(str(item.popularity))
+                obj.setText(f"Popularity: {item.popularity}")
                 
             elif isinstance(obj, PlayButtn):
                 obj.set_as_playing()
         
-        
-        # found_objs[0].setImage(item.cover_url)
-        # found_objs[1].setText(item.name)
-        # found_objs[2].set_as_playing()
         
         
     def set_plybtn_as_playing(self):
