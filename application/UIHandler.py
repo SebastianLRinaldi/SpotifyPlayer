@@ -26,10 +26,11 @@ from queue import Queue
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 
-
+# from UIUpdateLogic import UIUpdateLogic
 from SpotifyWebViewController import *
 from SearchManager import *
 
+from UIUpdateLogic import *
 
 # start QT application
 # start WebView of spotify 
@@ -60,7 +61,7 @@ def find_anObject(window: QMainWindow, widgetToFind: QObject):
     return found_window_objs
 
 
-class MainWindowController():
+class UIHandler():
     def __init__(self, window: QMainWindow = None):
         self.window = window
     
@@ -99,15 +100,19 @@ class MainWindowController():
         
 
     def ClickedTrack(self, item):
-        from WidgetDefinitions import TrackArtworkWidget, TrackTitle, PlayButtn
+        # from WidgetDefinitions import TrackArtworkWidget, TrackTitle, PlayButtn
 
         track_id = item.id
         SpotifyWebViewController().load_song('track', track_id)
-        
-        found_objs = find_Objects(self.window, [TrackArtworkWidget, TrackTitle, PlayButtn])
-        found_objs[0].setImage(item.cover_url)
-        found_objs[1].setText(item.name)
-        found_objs[2].set_as_playing()
+        UIUpdateLogic(self.window).updateUIOnTrackClick(item)
+        # found_objs = find_Objects(self.window, [TrackTitle])
+        # for obj in found_objs:
+        #     if isinstance(obj, TrackTitle):
+        #             print("\nFOUND TITLE\n")
+        #             obj.setText(item.name)
+        # found_objs[0].setImage(item.cover_url)
+        # found_objs[1].setText(item.name)
+        # found_objs[2].set_as_playing()
         
         self.ClickedPlay()
         
@@ -147,8 +152,13 @@ class MainWindowController():
     def get_song_progress(self):
         value = SpotifyWebViewController().track_progress()
         return value
+
+    def set_plybtn_as_playing(self):
+        UIUpdateLogic(self.window).set_plybtn_as_playing()
+        
     
-    
+    def set_plybtn_as_paused(self):
+        UIUpdateLogic(self.window).set_plybtn_as_paused()
     
     def destroy_spotify_webview(self):
         # show the window for a few seconds before destroying it:

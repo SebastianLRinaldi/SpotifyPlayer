@@ -79,12 +79,12 @@ def run():
     
     
     playTab.add_widges_to_tab(
-                TrackInfoPanel(),
+                TrackInfoPanel(window),
                 PlayerControls(window),
                 title="Player Panel")
     
     playTab.add_widges_to_tab(
-                TrackDetailsPanel(),
+                TrackDetailsPanel(window),
                 title="Track Details"
                 )
     
