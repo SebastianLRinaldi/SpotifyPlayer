@@ -26,7 +26,7 @@ from queue import Queue
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 from typing import List
-
+from datetime import timedelta
 
 from TimingManager import *
 from PyQt5.QtWidgets import QLabel
@@ -86,6 +86,10 @@ class IsolatedWidget(QWidget):
         self.widgetRow = widgetRow
         self.widgetCol = widgetCol
         # No UI control logic here, this widget is Isolated.
+        
+        
+
+
 
 
 """
@@ -333,7 +337,9 @@ class TrackProgressWidget(QProgressBar, ConnectedWidget):
         # self.loading_bar.setOrientation(QtCore.Qt.Vertical)
         self.setFormat(f"remaing: %p%")
         self.setValue(0)
-        
+        self.track_duration = ""
+        self.track_running_duration = ""
+    
         
         
         # Timer to update the progress
@@ -343,22 +349,63 @@ class TrackProgressWidget(QProgressBar, ConnectedWidget):
         
         # Simulated progress value
         self.progress = 0
+        
+    def set_track_duration(self, time: str):
+        self.track_duration = time
+        
+    def set_track_running_duration(self, time: str):
+        self.track_running_duration = time
+        
 
     def update_progress(self):
         """Update the progress bar's value"""
         """
         Need to stop the timer when song reaches end either by duration or %%
         """
-        value = self.ui_handler.get_song_progress()
+        value = self.ui_handler.get_track_progress()
         self.setValue(value)
         print(f"Progress: {value}%")
         
+        time_value = self.ui_handler.get_running_time_progress()
+        self.set_track_running_duration(time_value)
+        print(f"Time: {time_value}")
         
-    def play(self):
+        self.check_if_track_is_over()
+        
+    def check_if_track_is_over(self):
+        
+        """
+        If just a song no queue
+            stop
+        if Just a song but queue
+            continue top of queue
+        if playlist/album in queue
+            continue top of queue
+        """
+        print("Checking!")
+        print(f"{self.track_running_duration} == {self.track_duration}")
+
+
+        # Check if the current duration is greater than the target time
+        if self.track_running_duration in ("00:01", "00:00"):
+            print(f"Duration less than {self.track_running_duration}.")
+            print("STOPPING")
+            
+            self.ui_handler.set_track_as_not_playing()
+            self.ui_handler.set_plybtn_as_paused()
+            self.reset()
+            
+            
+        # Check if the current duration matches any target time
+        # if self.track_running_duration in target_times:
+
+            
+        
+    def progress_start(self):
         """Start the progress timer."""
         self.timer.start()  # Start the timer when playing the song
             
-    def pause(self):
+    def progress_stop(self):
         """stop the progress timer."""
         self.timer.stop()  # Stop the timer when the song is paused
             
@@ -375,13 +422,17 @@ class TrackProgressWidget(QProgressBar, ConnectedWidget):
         """
         self.progress = 0
         self.setValue(self.progress)
-        self.timer.stop()  # Stop the timer when resetting the song
+        # self.timer.stop()  # Stop the timer when resetting the song
         
 
 
 
 
-
+"""
+At first moving the ability to change the plybtn to the UiUpdate logic when
+it can be done here is strange but when we have two or more playbtns 
+we will need to update them all so this works fine
+"""
 class PlayButtn(QPushButton, ConnectedWidget):
     def __init__(self, ui_handler, text="PLAY", widgetRow = -1, widgetCol = -1):
         ConnectedWidget.__init__(self, ui_handler, widgetRow, widgetCol)
@@ -396,15 +447,14 @@ class PlayButtn(QPushButton, ConnectedWidget):
         self.update_playbtn_state()
         
     def set_as_playing(self):
+        self.ui_handler.set_track_as_playing()
         self.ui_handler.set_plybtn_as_playing()
-        self.is_playing = True
-        self.setText("PAUSE")
         
         
     def set_as_paused(self):
+        self.ui_handler.set_track_as_not_playing()
         self.ui_handler.set_plybtn_as_paused()
-        self.is_playing = False
-        self.setText("PLAY")
+        
         
     
     def update_playbtn_state(self):
@@ -424,7 +474,13 @@ class PlayButtn(QPushButton, ConnectedWidget):
             self.set_as_paused()
         else:
             self.set_as_playing()
-            
+
+
+"""
+Theses just go up and down the queue
+When we add shuffle it will place the currently selected song at top so you don't lose place and can contiune
+to go through the queue without worring about hitting the bttom right after you shuffle
+"""
 class NextTrackButtn(QPushButton, ConnectedWidget):
     def __init__(self, ui_handler, text="NEXT", widgetRow=-1, widgetCol=-1):
         # Call the ConnectedWidget constructor for shared initialization
@@ -596,4 +652,7 @@ class PlaylistQueueTabel(QListWidget, ConnectedWidget):
         # found_objs[0].setImage(item.cover_url)
         # found_objs[1].setText(item.name)
         # found_objs[2].set_as_playing()
+
+    def get_queue_size(self):
+        return self.count()
 

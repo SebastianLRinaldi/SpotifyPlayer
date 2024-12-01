@@ -108,6 +108,13 @@ class SpotifyWebViewController:
             print(progress_as_float)
             progress_number_result = progress_as_int
         return (progress_number_result)
+    
+    def track_time_progress(self):
+        time_element, selector = WebviewDOM().find_element('[data-testid="progress-timestamp"]')
+        if time_element:
+            # print(f"Stripped: {time_element.text.strip()[1:]}")
+            stripped_time_element  = time_element.text.strip()[1:]
+        return stripped_time_element #(progress_number_result)
 
     def click_play_btn(self):
 

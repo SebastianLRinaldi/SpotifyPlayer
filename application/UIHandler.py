@@ -105,6 +105,7 @@ class UIHandler():
         track_id = item.id
         SpotifyWebViewController().load_song('track', track_id)
         UIUpdateLogic(self.window).updateUIOnTrackClick(item)
+        # UIUpdateLogic(self.window).set_track_duration(item)
         # found_objs = find_Objects(self.window, [TrackTitle])
         # for obj in found_objs:
         #     if isinstance(obj, TrackTitle):
@@ -149,8 +150,12 @@ class UIHandler():
         print(f"{album_id} Does nothing when clicked rn")
         # SpotifyWebViewController().load_song('album', album_id)
 
-    def get_song_progress(self):
+    def get_track_progress(self):
         value = SpotifyWebViewController().track_progress()
+        return value
+    
+    def get_running_time_progress(self):
+        value = SpotifyWebViewController().track_time_progress()
         return value
 
     def set_plybtn_as_playing(self):
@@ -159,6 +164,17 @@ class UIHandler():
     
     def set_plybtn_as_paused(self):
         UIUpdateLogic(self.window).set_plybtn_as_paused()
+        
+    def set_track_as_playing(self):
+        UIUpdateLogic(self.window).set_track_as_playing()
+        
+    
+    def set_track_as_not_playing(self):
+        UIUpdateLogic(self.window).set_track_as_not_playing()
+        
+        
+    def check_queue(self):
+        UIUpdateLogic(self.window).play_next_if_que()
     
     def destroy_spotify_webview(self):
         # show the window for a few seconds before destroying it:

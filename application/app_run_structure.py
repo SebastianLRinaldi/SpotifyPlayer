@@ -79,6 +79,10 @@ def run():
                 PlayerQueue(window),
                 title="Queue")
     
+    exploreTab.add_widges_to_tab(
+            DebugPanel(window),
+            title="Debug"
+            )
     
     playTab.add_widges_to_tab(
                 TrackInfoPanel(window),
@@ -89,6 +93,7 @@ def run():
                 TrackDetailsPanel(window),
                 title="Track Details"
                 )
+    
     
     window.setup_central_widget(
         exploreTab,

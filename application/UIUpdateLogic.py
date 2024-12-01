@@ -47,6 +47,7 @@ class UIUpdateLogic():
                 
             elif isinstance(obj, TrackDuration):
                 obj.setText(f"Duration: {item.duration}")
+                self.set_track_duration(item)
                 
             elif isinstance(obj, TrackPopularity):
                 obj.setText(f"Popularity: {item.popularity}")
@@ -54,14 +55,46 @@ class UIUpdateLogic():
             elif isinstance(obj, PlayButtn):
                 obj.set_as_playing()
         
-        
-        
-    def set_plybtn_as_playing(self):
+    def set_track_duration(self, item: TrackItem):
         found_objs = find_aanObject(self.window, TrackProgressWidget)
         for obj in found_objs:
-            obj.play()
+            if isinstance(obj, TrackProgressWidget):
+                obj.set_track_duration(f"{item.duration}")
+        
+    def set_track_as_playing(self):
+        found_objs = find_aanObject(self.window, TrackProgressWidget)
+        for obj in found_objs:
+            if isinstance(obj, TrackProgressWidget):
+                obj.progress_start()
+        
+    def set_track_as_not_playing(self):
+        found_objs = find_aanObject(self.window, TrackProgressWidget)
+        for obj in found_objs:
+            if isinstance(obj, TrackProgressWidget):
+                obj.progress_stop()
+            
+    def set_plybtn_as_playing(self):
+        found_objs = find_aanObject(self.window, PlayButtn)
+        for obj in found_objs:
+            if isinstance(obj, PlayButtn):
+                # obj.set_as_playing()
+                obj.is_playing = True
+                obj.setText("PAUSE")
         
     def set_plybtn_as_paused(self):
-        found_objs = find_aanObject(self.window, TrackProgressWidget)
+        found_objs = find_aanObject(self.window, PlayButtn)
         for obj in found_objs:
-            obj.pause()
+            if isinstance(obj, PlayButtn):
+                # obj.set_as_paused
+                obj.is_playing = False
+                obj.setText("PLAY")
+                
+    def check_queue_size(self):
+        found_objs = find_aanObject(self.window, PlaylistQueueTabel)
+        for obj in found_objs:
+            if isinstance(obj, PlaylistQueueTabel):
+                return obj.get_queue_size()
+            
+    def play_next_if_que(self):
+        if self.check_queue_size() > 2:
+            pass

@@ -40,6 +40,7 @@ UI Compenets made with widgets this needs to be here in this file
 '''
 
 from WidgetDefinitions import *
+from DebugLogic import DebugElementResultWidget, DebugElementWidget
 from UIHandler import UIHandler
 
 import sys
@@ -112,6 +113,17 @@ class PlayerQueue(BaseWidget):
         self.set_grid_layout(
             PlaylistQueueLabel(),
             PlaylistQueueTabel(self.ui_handler)
+        )
+        
+        
+class DebugPanel(BaseWidget):
+    def __init__(self, window: QMainWindow, widgetRow = -1, widgetCol = -1):
+        super().__init__(window, widgetRow, widgetCol)
+        
+        # Create and arrange buttons/widgets specific to PlayerControls
+        self.set_grid_layout(
+            DebugElementWidget(self.ui_handler),
+            DebugElementResultWidget()
         )
 
 

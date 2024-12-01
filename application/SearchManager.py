@@ -65,18 +65,27 @@ class SearchManager:
         for obj in objects_to_update:
             obj.clear()
             
+    # def convert_ms_to_hms(self, ms):
+    #     # Create a timedelta object using the milliseconds
+    #     td = timedelta(milliseconds=ms)
+        
+    #     # Format the timedelta to hours:minutes:seconds
+    #     result = str(td)  # This will return a string in the format 'H:MM:SS'
+        
+    #     # If the time is less than an hour, it will display in 'MM:SS', so we'll format that
+    #     if result.startswith("0:"):
+    #         result = result[2:]  # Strip the leading '0:' for times less than an hour
+        
+    #     return result
+    
+    
     def convert_ms_to_hms(self, ms):
-        # Create a timedelta object using the milliseconds
-        td = timedelta(milliseconds=ms)
+        # Calculate minutes and seconds directly
+        total_seconds = ms // 1000
+        minutes = total_seconds // 60
+        seconds = total_seconds % 60
         
-        # Format the timedelta to hours:minutes:seconds
-        result = str(td)  # This will return a string in the format 'H:MM:SS'
-        
-        # If the time is less than an hour, it will display in 'MM:SS', so we'll format that
-        if result.startswith("0:"):
-            result = result[2:]  # Strip the leading '0:' for times less than an hour
-        
-        return result
+        return f"{minutes:02}:{seconds:02}"
 
     def add_track_items_to_table(self, tableToUpdate: QListWidget):
         try:
