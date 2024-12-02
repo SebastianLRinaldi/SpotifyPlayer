@@ -109,10 +109,10 @@ class WebviewWindow:
         webview.windows[0].load_url(url)
         
     def start_webview(self, backend_logic, window, menuitems=[]):
-        webview.start(backend_logic, window, menu=menuitems, private_mode=False, debug=True)
+        webview.start(backend_logic, window, menu=menuitems, private_mode=False, debug=False)
         
     def set_and_start_window(self, backend_logic, url):
-        self.window = webview.create_window('My Webview', url, x=508, y=840-135, width=724, height=135, background_color='#00FFFF', transparent=False, minimized=False,  shadow=False, on_top=False, frameless=True, easy_drag=True)
+        self.window = webview.create_window('My Webview', url, x=508, y=840-135, width=724, height=135, background_color='#00FFFF', transparent=False, minimized=True,  shadow=False, on_top=False, frameless=True, easy_drag=True)
         webview.windows[0].events.closed += WebViewWindowActions.on_closed
         webview.windows[0].events.loaded += WebViewWindowActions.on_loaded # When DOM is loaded
         webview.windows[0].events.shown += WebViewWindowActions.on_shown # When webview window is loaded
