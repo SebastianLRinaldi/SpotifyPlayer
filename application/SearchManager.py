@@ -136,8 +136,9 @@ class SearchManager:
             # Playlists loop
 
             for playlist in self.playlists:
-                found_item = PlaylistItem(playlist['name'], playlist['owner']['display_name'], playlist['tracks']['total'], playlist['id'])
-                tableToUpdate.addItem(found_item)
+                if playlist is not None:
+                    found_item = PlaylistItem(playlist['name'], playlist['owner']['display_name'], playlist['tracks']['total'], playlist['id'])
+                    tableToUpdate.addItem(found_item)
                 # print(found_item)
                 # pl_results = self.sp.playlist_tracks(playlist['id'], limit=5)
                 # print(pl_results['items'][0]['track']['id'])
