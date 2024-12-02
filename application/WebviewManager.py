@@ -58,6 +58,7 @@ class WebviewDOM:
             else:
                 return None, selector
         except Exception as e:
+            # Main window failed to start
             print(f"Error finding element: {e}")
             return None, selector
     
@@ -106,10 +107,10 @@ class WebviewWindow:
     def change_url(self, url):
         webview.windows[0].load_url(url)
         
-    def start_webview(self, window, menuitems=[]):
-        webview.start(self.blank_logic, window, menu=menuitems, private_mode=False, debug=False)
+    def start_webview(self, backend_logic, window, menuitems=[]):
+        webview.start(backend_logic, window, gui='qt', menu=menuitems, private_mode=False, debug=False)
         
-    def set_and_start_window(self, url):
+    def set_and_start_window(self, backend_logic, url):
         self.window = webview.create_window('My Webview', url, x=508, y=840-135, width=724, height=135, background_color='#00FFFF', transparent=False, minimized=False,  shadow=False, on_top=False, frameless=True, easy_drag=True)
         webview.windows[0].events.closed += WebViewWindowActions.on_closed
         webview.windows[0].events.loaded += WebViewWindowActions.on_loaded # When DOM is loaded
@@ -117,5 +118,6 @@ class WebviewWindow:
         webview.windows[0].events.restored += WebViewWindowActions.on_restored
         # webview.windows[0].events.moved += WebViewWindowActions.on_moved
 
-        # Start the webview on the main thread
-        self.start_webview(self.window)
+        # Start the webview on the main thread and run back_endlogic in another thread
+        # his will launch a separate thread and is identical to starting a thread by hand.
+        self.start_webview(backend_logic, self.window)

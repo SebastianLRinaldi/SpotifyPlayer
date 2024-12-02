@@ -57,7 +57,7 @@ class Window(QMainWindow):
 
 
 
-def run():
+def run_pyqt(win):
     app = QApplication(sys.argv)
     window = Window()
     
@@ -140,10 +140,10 @@ def run():
 #     app.exec_()       
     
 def main():
-    qt_thread = threading.Thread(target=run)
-    qt_thread.start()
+    # qt_thread = threading.Thread(target=run)
+    # qt_thread.start()
     
-    sw = SpotifyWebViewController()
-    sw.run()
+    
+    SpotifyWebViewMaker().run_win(run_pyqt)
 if __name__ == "__main__":
     main()

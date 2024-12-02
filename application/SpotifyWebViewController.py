@@ -57,18 +57,32 @@ from WebviewManager import WebviewWindow, WebviewDOM
 '''
 Need to split the window creation and the spotify webapge manipuluation into two classes
 '''
+
+class SpotifyWebViewMaker:
+    def __init__(self):
+        pass
+    
+    def run_win(self, backend_logic):
+        self.create_window(backend_logic)
+        
+
+    def create_window(self, backend_logic):
+        default_url = "https://open.spotify.com/embed/track/0B7zVYoRimfnl1RqmFNksV"
+        WebviewWindow().set_and_start_window(backend_logic, default_url)
+
         
 class SpotifyWebViewController:
     def __init__(self):
         pass
+    #     self.logic = logic
     
-    def run(self):
-        self.create_window()
+    # def run(self):
+    #     self.create_window()
         
 
-    def create_window(self):
-        default_url = "https://open.spotify.com/embed/track/0B7zVYoRimfnl1RqmFNksV"
-        WebviewWindow().set_and_start_window(default_url)
+    # def create_window(self):
+    #     default_url = "https://open.spotify.com/embed/track/0B7zVYoRimfnl1RqmFNksV"
+    #     WebviewWindow().set_and_start_window(self.logic, default_url)
 
 
     def load_song(self, song_type: str, song_id: str):
