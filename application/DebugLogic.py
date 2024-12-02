@@ -47,9 +47,6 @@ class DebugElementWidget(QLineEdit, ConnectedWidget):
         self.returnPressed.connect(lambda: self.find_update_objects_and_search())
 
     def find_update_objects_and_search(self):
-        # objList = [SearchTextWidget, TrackTabel, AlbumsTabel, ArtistsTabel, PlaylistsTabel]
-        # found_window_objs = find_Objects(self.window, objList)
-        # self.ui_handler.RunSearch(self.text())
         try:
             WebviewDOM().mark_element(self.text())
         except Exception as e:

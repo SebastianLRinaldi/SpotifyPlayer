@@ -41,79 +41,6 @@ This acts as my pub sub kinda
     because UI elements know of eachother exsistance(defintions) and can find them on the pyqt5 window
     with the find object functions below
 """
-
-# def find_Objects(window: QMainWindow, widgetsToFind: list[QObject]):
-#     found_window_objs = []
-#     for obj in widgetsToFind:
-#         obj_found = window.findChild(obj)
-#         found_window_objs.append(obj_found)
-    
-#     return found_window_objs
-
-# def find_anObject(window: QMainWindow, widgetToFind: QObject):
-#     found_window_objs = window.findChild(widgetToFind)
-#     return found_window_objs
-
-
-# """
-# Might need to make a contianer class
-# as well as a widget class per object I want to make
-# """
-# class WindowStyle:
-#     def setup_stylesheets(self: QWidget):
-#         # self.setStyleSheet("background-color: white;")
-#         self.setStyleSheet("""
-#             QWidget {
-#                 background-color: #1e1e2f;
-#                 color: white;
-#                 font-family: 'Roboto', sans-serif;
-#             }
-#             QListWidget::item:selected {
-#                 background-color: #D8BFD8;
-#                 color: white;
-#             }
-#             QListWidget::item {
-#                 background-color: white;
-#             }
-#             QLabel {
-#                 font-weight: bold;
-#             }
-#             QLineEdit {
-#                 background-color: #2c2c3b;
-#                 color: white;
-#                 border: 1px solid #3a3a4a;
-#                 border-radius: 20px;
-#                 padding: 10px;
-#                 font-size: 14px;
-#             }
-#             QPushButton {
-#                 background-color: #3a3a4a;
-#                 color: white;
-#                 border: none;
-#                 border-radius: 20px;
-#                 padding: 10px;
-#                 font-size: 14px;
-#                 font-family: 'Roboto', sans-serif;
-#             }
-#             QPushButton:hover {
-#                 background-color: #454d5b;
-#             }
-#             QProgressBar {
-#                 text-align: center;
-#                 background-color: #2c2c3b;
-#                 border: 1px solid #3a3a4a;
-#                 border-radius: 10px;
-#                 height: 8px;
-#                 font-size: 12px;
-#             }
-#             QProgressBar::chunk {
-#                 background-color: purple;
-#                 border-radius: 5px;
-#             }
-#         """)
-
-
-
 class ConnectedWidget(QWidget):
     def __init__(self, ui_handler, widgetRow=-1, widgetCol=-1, *args, **kwargs):
         """
@@ -147,50 +74,12 @@ class IsolatedWidget(QWidget):
         self.widgetRow = widgetRow
         self.widgetCol = widgetCol
         # No UI control logic here, this widget is Isolated.
- 
-        
-        
-
-
 
 class Button(QPushButton):
     def __init__(self, text="Click me!", widgetRow = -1, widgetCol = -1):
         super().__init__(text)
         self.widgetRow = widgetRow
         self.widgetCol = widgetCol
-
-# class TrackTitle(QLabel):
-#     def __init__(self, text="No track selected", widgetRow = -1, widgetCol = -1):
-#         super().__init__(text)
-#         self.widgetRow = widgetRow
-#         self.widgetCol = widgetCol
-#         self.setObjectName("TrackTitle")
-        
-# class TrackArtist(QLabel):
-#     def __init__(self, text="No artist for track", widgetRow = -1, widgetCol = -1):
-#         super().__init__(text)
-#         self.widgetRow = widgetRow
-#         self.widgetCol = widgetCol
-        
-# class TrackID(QLabel):
-#     def __init__(self, text="No id for track", widgetRow = -1, widgetCol = -1):
-#         super().__init__(text)
-#         self.widgetRow = widgetRow
-#         self.widgetCol = widgetCol
-        
-        
-# class TrackDuration(QLabel):
-#     def __init__(self, text="No duration in ms for track", widgetRow = -1, widgetCol = -1):
-#         super().__init__(text)
-#         self.widgetRow = widgetRow
-#         self.widgetCol = widgetCol
-
-
-# class TrackPopularity(QLabel):
-#     def __init__(self, text="No populatirt for track", widgetRow = -1, widgetCol = -1):
-#         super().__init__(text)
-#         self.widgetRow = widgetRow
-#         self.widgetCol = widgetCol
 
 
 class TrackTitle(QLabel, IsolatedWidget):
@@ -231,70 +120,17 @@ class TrackPopularity(QLabel, IsolatedWidget):
 
 
 """
-Everything that uses this controlor should be in its own class?
-so we can make one instance on creating the pyqt5 applcation 
-instead of creating it every time we need to do something
+Would be cool  to get icon, backgroundart, artisit pfp, colors, and any other artwork that we could update 
+    are UI elements with 
+    
+Should also make some type of debuger for finding elements that I can just type in or copypaste them
+while the program is run to highlight them and dehighlight them
+useful for when and if things get updated on the spotify side
+
+Would also be cool to be able to update the element_ids while the application is running to 
+so when in car if something doesn't work I can find them and update them without
+needing to get out keyboard or something?
 """
-# class TrackArtworkWidget(QLabel): 
-#     def __init__(self, text="Click me!", widgetRow = -1, widgetCol = -1):
-#         super().__init__(text)
-#         self.widgetRow = widgetRow
-#         self.widgetCol = widgetCol
-
-#         self.setFixedSize(200, 200)
-
-#         self.setStyleSheet(f"""
-#             QLabel {{
-#                 background-color: #2c2c3b;
-#                 border-radius: {100}px;
-#             }}
-#         """)
-
-#         self.setText(f"{self.height(), self.width()}")
-        
-        
-#         """
-#         need to add functions similar to the ProgressBar 
-#         where other elements can set and change the content of the artwork widget
-#         so will need a replace artwork function that sets new artwork to this widget
-        
-#         maybe set Background color to avg color or icon? 
-#         """
-#     def setImage(self, url: str):
-#         self.load_image(url)
-        
-        
-#         # pixmap = QPixmap()
-#         # # if pixmap.load(url):
-#         # if pixmap.loadFromData(url.encode()):
-#         #     print(f"FLoaded image from URL: {url}")
-#         #     self.setPixmap(pixmap.scaled(self.size(), Qt.KeepAspectRatio))
-#         # else:
-#         #     print(f"Failed to load image from URL: {url}")
-
-
-#     def load_image(self, url):
-#         manager = QNetworkAccessManager(self)
-#         manager.finished.connect(self.handle_image_loaded)
-#         request = QNetworkRequest(QUrl(url))
-#         manager.get(request)
-        
-#     def handle_image_loaded(self, reply: QNetworkReply):
-#         if reply.error() == QNetworkReply.NetworkError.NoError:
-#             image_data = reply.readAll()
-#             image = QImage()
-            
-#             if image.loadFromData(image_data):
-#                 # pixmap = QPixmap.fromImage(image) #.scaled(300, 200, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation)
-#                 # self.setPixmap(pixmap.scaled(self.size(), Qt.KeepAspectRatio))
-#                 self.setPixmap(QPixmap.fromImage(image).scaled(300, 200, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation))
-#                 print(self.size())
-#             else:
-#                 print("Error loading image")
-#         else:
-#             print("Network error:", reply.errorString())
-
-
 class TrackArtworkWidget(QLabel, IsolatedWidget):
     def __init__(self, text="Click me!", widgetRow=-1, widgetCol=-1):
         # Initialize IsolatedWidget with row and column info
@@ -411,12 +247,6 @@ class TrackProgressWidget(QProgressBar, ConnectedWidget):
             
             self.ui_handler.ClickedNextTrack()
             
-            
-        # Check if the current duration matches any target time
-        # if self.track_running_duration in target_times:
-
-            
-        
     def progress_start(self):
         """Start the progress timer."""
         self.timer.start()  # Start the timer when playing the song
@@ -437,8 +267,8 @@ class TrackProgressWidget(QProgressBar, ConnectedWidget):
             images in other elements like the artist and song cover when a item is clicked
         """
         self.progress = 0
-        self.setValue(self.progress)
-        # self.timer.stop()  # Stop the timer when resetting the song
+        self.setValue(self.progress) # Another function will end up stopping the timer when resetting the song
+        
         
 
 
@@ -520,11 +350,6 @@ class PrevousTrackButtn(QPushButton, ConnectedWidget):
 
 
 
-
-
-
-
-        
 class SearchBarWidget(QLineEdit, ConnectedWidget):
     def __init__(self, ui_handler, text="Search...", widgetRow=-1, widgetCol=-1):
         # Initialize the ConnectedWidget to handle common properties
@@ -548,13 +373,6 @@ class SearchTextWidget(QLabel, IsolatedWidget):
         # Initialize QLabel with the text
         QLabel.__init__(self, text)
 
-        
-
-        
-        
-        
-        
-
 
 from applicationTypes import TrackItem
 # class SuperItems():
@@ -573,11 +391,6 @@ class TrackTabel(QListWidget, ConnectedWidget):
     def on_item_clicked(self, item: TrackItem):
         print(f"TrackObject: {item}")
         self.ui_handler.ClickedTrack(item)
-        
-        # found_objs = find_Objects(self.window, [TrackArtworkWidget, TrackTitle, PlayButtn])
-        # found_objs[0].setImage(item.cover_url)
-        # found_objs[1].setText(item.name)
-        # found_objs[2].set_as_playing()
 
 
 class AlbumsTableLabel(QLabel, IsolatedWidget):
@@ -655,16 +468,6 @@ class PlaylistQueueTabel(QListWidget, ConnectedWidget):
         # Initialize the QListWidget part (no need for super call as we're using QListWidget directly)
         QListWidget.__init__(self)
         
-        # self.setStyleSheet("""
-        # QListWidget::item:selected {
-        #     background-color: lightblue;
-        #     color: black;
-        # }
-        # QListWidget::item {
-        #     background-color: white;
-        # }
-        # """)
-        
         self.index = -1
         self.itemClicked.connect(self.on_item_clicked)
         
@@ -677,11 +480,6 @@ class PlaylistQueueTabel(QListWidget, ConnectedWidget):
             self.index = self.get_index_from_item(item)
             self.ui_handler.ClickedTrack(item)
             print(f"itemINDEX: {self.index}")
-        
-        # found_objs = find_Objects(self.window, [TrackArtworkWidget, TrackTitle, PlayButtn])
-        # found_objs[0].setImage(item.cover_url)
-        # found_objs[1].setText(item.name)
-        # found_objs[2].set_as_playing()
 
     def get_queue_size(self):
         return self.count()
@@ -702,7 +500,6 @@ class PlaylistQueueTabel(QListWidget, ConnectedWidget):
         self.itemClicked.emit(next_item)
 
 
-            
     def get_prev_item(self):
         """
         Add error handling for if prev item is None
@@ -711,8 +508,3 @@ class PlaylistQueueTabel(QListWidget, ConnectedWidget):
         self.prev_clicked = True
         print(f"-Changing Index to {self.index-1}")
         self.itemClicked.emit(self.item(self.index-1))
-        
-    
-    
-    
-

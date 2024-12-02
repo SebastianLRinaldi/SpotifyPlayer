@@ -65,20 +65,6 @@ class BaseWidget(QWidget):
 """
 Gets Updated by other elements and needs to access other UI elements
 """
-# class PlayerControls(QWidget):
-#     def __init__(self, window: QMainWindow, widgetRow = -1, widgetCol = -1):
-#         super().__init__()
-#         self.widgetRow = widgetRow
-#         self.widgetCol = widgetCol
-        
-#         grid_layout = GridLayout(
-#             PlayButtn(window),
-#             PrevousTrackButtn(),
-#             NextTrackButtn()
-#             )
-        
-#         self.setLayout(grid_layout)
-
 class PlayerControls(BaseWidget):
     def __init__(self, window: QMainWindow, widgetRow = -1, widgetCol = -1):
         super().__init__(window, widgetRow, widgetCol)
@@ -90,19 +76,6 @@ class PlayerControls(BaseWidget):
             NextTrackButtn(self.ui_handler)
         )
         
-        
-# class PlayerQueue(QWidget):
-#     def __init__(self, window: QMainWindow, widgetRow = -1, widgetCol = -1):
-#         super().__init__()
-#         self.widgetRow = widgetRow
-#         self.widgetCol = widgetCol
-        
-#         grid_layout = GridLayout(
-#             PlaylistQueueLabel(),
-#             PlaylistQueueTabel(window)
-#             )
-        
-#         self.setLayout(grid_layout)
 
 class PlayerQueue(BaseWidget):
     def __init__(self, window: QMainWindow, widgetRow = -1, widgetCol = -1):
@@ -131,20 +104,6 @@ class DebugPanel(BaseWidget):
 """
 Gets Updated by other elements but don't need to access other UI elements
 """      
-# class TrackInfoPanel(QWidget):
-#     def __init__(self,widgetRow = -1, widgetCol = -1):
-#         super().__init__()
-#         self.widgetRow = widgetRow
-#         self.widgetCol = widgetCol
-        
-#         grid_layout = GridLayout(
-#             TrackArtworkWidget(),
-#             TrackProgressWidget(),
-#             TrackTitle()
-#             )
-        
-#         self.setLayout(grid_layout)
-
 class TrackInfoPanel(BaseWidget):
     def __init__(self, window: QMainWindow, widgetRow = -1, widgetCol = -1):
         # Initialize the parent class (BaseWidget) with window, row, and column
@@ -158,23 +117,6 @@ class TrackInfoPanel(BaseWidget):
             TrackRunningDuration(),
         )
         
-        
-# class TrackDetailsPanel(QWidget):
-#     def __init__(self,widgetRow = -1, widgetCol = -1):
-#         super().__init__()
-#         self.widgetRow = widgetRow
-#         self.widgetCol = widgetCol
-        
-#         grid_layout = GridLayout(
-#             TrackArtworkWidget(),
-#             TrackTitle(),
-#             TrackArtist(),
-#             TrackID(),
-#             TrackDuration(),
-#             TrackPopularity()
-#             )
-        
-#         self.setLayout(grid_layout)
 
 class TrackDetailsPanel(BaseWidget):
     def __init__(self, window: QMainWindow, widgetRow = -1, widgetCol = -1):
@@ -196,20 +138,6 @@ class TrackDetailsPanel(BaseWidget):
 """
 Gets Updated by other elements and needs to access other UI elements
 """       
-# class SearchBar(QWidget):
-#     def __init__(self, window: QMainWindow, widgetRow = 0, widgetCol = 0):
-#         super().__init__()
-#         self.widgetRow = widgetRow
-#         self.widgetCol = widgetCol
-        
-#         grid_layout = GridLayout(
-#             SearchBarWidget(window),
-#             SearchTextWidget()
-#             )
-        
-#         self.setLayout(grid_layout)
-
-
 class SearchBar(BaseWidget):
     def __init__(self, window: QMainWindow, widgetRow = 0, widgetCol = 0):
         # Initialize the parent class (BaseWidget)
@@ -224,28 +152,6 @@ class SearchBar(BaseWidget):
 """
 Gets Updated by other elements and needs to access other UI elements
 """
-# class SearchResultsTables(QWidget):
-#     def __init__(self, window: QMainWindow, widgetRow = -1, widgetCol = -1):
-#         super().__init__()
-#         self.widgetRow = widgetRow
-#         self.widgetCol = widgetCol
-        
-#         grid_layout = GridLayout(
-#             TrackTableLabel(widgetRow = 0, widgetCol = 0),
-#             TrackTabel(window, widgetRow = 1, widgetCol = 0),
-            
-#             AlbumsTableLabel(widgetRow = 0, widgetCol = 1),
-#             AlbumsTabel(window, widgetRow = 1, widgetCol = 1),
-            
-#             ArtistsTableLabel(widgetRow = 2, widgetCol = 0),
-#             ArtistsTabel(window, widgetRow = 3, widgetCol = 0),
-            
-#             PlaylistsTableLabel(widgetRow = 2, widgetCol = 1),
-#             PlaylistsTabel(window, widgetRow = 3, widgetCol = 1),
-#             )
-        
-#         self.setLayout(grid_layout)       
-
 class SearchResultsTables(BaseWidget):
     def __init__(self, window: QMainWindow, widgetRow = -1, widgetCol = -1):
         # Initialize the parent class (BaseWidget)
@@ -315,7 +221,3 @@ class Widget(QWidget):
         super().__init__()
         if layout:
             self.setLayout(layout)
-
-
-    
-

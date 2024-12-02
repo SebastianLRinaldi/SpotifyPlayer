@@ -32,12 +32,9 @@ from SearchManager import *
 
 from UIUpdateLogic import *
 
-# start QT application
-# start WebView of spotify 
 """
 Could be called MainWindowUIEventsController
 more like a WidgetDefintion to Webview Middle man
-
 """
 
 
@@ -112,21 +109,9 @@ class UIHandler():
         UIUpdateLogic(self.window).ClickPrevTrack()
 
     def ClickedTrack(self, item):
-        # from WidgetDefinitions import TrackArtworkWidget, TrackTitle, PlayButtn
-
         track_id = item.id
         SpotifyWebViewController().load_song('track', track_id)
         UIUpdateLogic(self.window).updateUIOnTrackClick(item)
-        # UIUpdateLogic(self.window).set_track_duration(item)
-        # found_objs = find_Objects(self.window, [TrackTitle])
-        # for obj in found_objs:
-        #     if isinstance(obj, TrackTitle):
-        #             print("\nFOUND TITLE\n")
-        #             obj.setText(item.name)
-        # found_objs[0].setImage(item.cover_url)
-        # found_objs[1].setText(item.name)
-        # found_objs[2].set_as_playing()
-        
         self.ClickedPlay()
         
 

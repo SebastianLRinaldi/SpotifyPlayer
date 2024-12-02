@@ -200,46 +200,8 @@ def run_pyqt(win):
     app.exec_()     
 
 
-# class Window(QMainWindow):
-#     def __init__(self):
-#         super().__init__()
-#         self.setWindowTitle("My Window")
-#         self.resize(400, 300)
-
-
-#     def setup_central_widget(self, *widgets):
-#         grid_layout = GridLayout(*widgets)
-#         central_widget = Widget(grid_layout)
-#         self.setCentralWidget(central_widget)
-
-#     def show_window(self):
-#         self.show()
-
-
-# def run():
-#     app = QApplication(sys.argv)
-#     window = Window()
-    
-#     window.setup_central_widget(
-#         SearchBar(window),
-#         SearchResultsTables(window),
-
-#         PlayerQueue(window),
-
-#         TrackInfoPanel(),
-#         PlayerControls(window),
-
-        
-#     )
-    
-#     window.show_window()
-#     app.exec_()       
     
 def main():
-    # qt_thread = threading.Thread(target=run)
-    # qt_thread.start()
-    
-    
     SpotifyWebViewMaker().run_win(run_pyqt)
 if __name__ == "__main__":
     main()

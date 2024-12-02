@@ -26,38 +26,16 @@ from queue import Queue
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 
-
-
-"""
-"""
-
 import WebviewManager
 from TimingManager import TimerManager
 from WebviewManager import WebviewWindow, WebviewDOM
 
 
-# class SpotifyWebViewManager:
-#     def __init__(self):
-#         super().__init__()
-#         self.is_playing = False
-#         self.webview = WebviewManager()
-#         self.timer = TimerManager()
 
-#     def start(self):
-#         self.webview.start()
-#         self.timer.start()
-
-#     def stop(self):
-#         self.webview.stop()
-#         self.timer.stop()
-
-#     def load_song(self, song_type, song_id):
-#         self.webview.load_song(song_type, song_id)
 
 '''
 Need to split the window creation and the spotify webapge manipuluation into two classes
 '''
-
 class SpotifyWebViewMaker:
     def __init__(self):
         pass
@@ -74,16 +52,6 @@ class SpotifyWebViewMaker:
 class SpotifyWebViewController:
     def __init__(self):
         pass
-    #     self.logic = logic
-    
-    # def run(self):
-    #     self.create_window()
-        
-
-    # def create_window(self):
-    #     default_url = "https://open.spotify.com/embed/track/0B7zVYoRimfnl1RqmFNksV"
-    #     WebviewWindow().set_and_start_window(self.logic, default_url)
-
 
     def load_song(self, song_type: str, song_id: str):
         song_url = self.get_song_url(song_type, song_id)
@@ -169,80 +137,6 @@ class SpotifyWebViewController:
             print("Element not found after maximum attempts")
             
         return playbtnresult
-
-
-            
-            
-    def click_next_track_btn(self):
-        pass
-        # self.mark_important_elements()
-        # element, selector = WebviewDOM().find_element('[data-testid="control-button-skip-forward"]')
-
-        # if element is not None:
-        #     print("Found element:", element.tag)
-            
-        #     # Add button click functionality
-        #     js_code = f'''
-        #     var element = document.querySelector('{selector}');
-
-        #     element.click();
-        #     '''
-        #     # Execute the JavaScript code
-        #     result = webview.windows[0].evaluate_js(js_code)
-        
-        # else:
-        #     print("Play btn Element not found")
-            
-    def click_prev_track_btn(self):
-        pass
-        # element, selector = WebviewDOM().find_element('[data-testid="control-button-skip-back"]')
-
-        # if element is not None:
-        #     print("Found element:", element.tag)
-            
-        #     # Add button click functionality
-        #     js_code = f'''
-        #     var element = document.querySelector('{selector}');
-
-        #     element.click();
-        #     '''
-        #     # Execute the JavaScript code
-        #     result = webview.windows[0].evaluate_js(js_code)
-        
-        # else:
-        #     print("Play btn Element not found")
-        
-            
-    # def get_artwork(self):
-    #     """
-    #     Would be cool  to get icon, backgroundart, artisit pfp, colors, and any other artwork that we could update 
-    #         are UI elements with 
-            
-    #     Should also make some type of debuger for finding elements that I can just type in or copypaste them
-    #     while the program is run to highlight them and dehighlight them
-    #     useful for when and if things get updated on the spotify side
-        
-    #     Would also be cool to be able to update the element_ids while the application is running to 
-    #     so when in car if something doesn't work I can find them and update them without
-    #     needing to get out keyboard or something?
-    #     """
-    #     def find_artwork():
-    #         artwork_element, selector = WebviewDOM().find_element('[data-testid="main-page"]')
-            
-    #         if artwork_element:
-    #             print("Found element:", artwork_element.tag)
-            
-    #         else:
-    #             print("artwork_element Not Found")
-
-    #     webview.windows[0].events.loaded += find_artwork
-        
-
-            
-
-    
-# player = SpotifyWebViewController()
-
 
 
 

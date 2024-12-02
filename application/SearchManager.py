@@ -64,19 +64,6 @@ class SearchManager:
     def clear_all_objs(self, objects_to_update: List[QObject]):
         for obj in objects_to_update:
             obj.clear()
-            
-    # def convert_ms_to_hms(self, ms):
-    #     # Create a timedelta object using the milliseconds
-    #     td = timedelta(milliseconds=ms)
-        
-    #     # Format the timedelta to hours:minutes:seconds
-    #     result = str(td)  # This will return a string in the format 'H:MM:SS'
-        
-    #     # If the time is less than an hour, it will display in 'MM:SS', so we'll format that
-    #     if result.startswith("0:"):
-    #         result = result[2:]  # Strip the leading '0:' for times less than an hour
-        
-    #     return result
     
     
     def convert_ms_to_hms(self, ms):
