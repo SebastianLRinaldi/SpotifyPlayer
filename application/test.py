@@ -24,7 +24,7 @@ class WebViewWindow(QMainWindow):
 
     def _add_webview_to_layout(self):
         """Callback to add the QWebEngineView to the PyQt5 layout."""
-        print(dir(webview.Window.Handle))
+        print(dir( webview.windows[0]))
         native_view = webview.native  # Attempt to access the native view
         print(f"Native View: {native_view}")
         if native_view:

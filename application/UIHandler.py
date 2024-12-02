@@ -80,7 +80,7 @@ class UIHandler():
 
         objects_to_update = [SearchTextWidget, TrackTabel, AlbumsTabel, ArtistsTabel, PlaylistsTabel]
         found_window_objs = find_Objects(self.window, objects_to_update)
-        print(len(found_window_objs))
+        # print(len(found_window_objs))
         
         SearchManager().perform_search(query, found_window_objs)
     
@@ -88,16 +88,28 @@ class UIHandler():
     This should be a function within playButton widget?
     """
     def ClickedPlay(self):
-        SpotifyWebViewController().click_play_btn()
+        result = SpotifyWebViewController().click_play_btn()
+        if result == "Something went wrong":
+            print("Bad Song")
+            self.ClickedNextTrack()
+            
+            
+            # if prev:
+            #     self.ClickedPrevTrack()
+            # else:
+            #     self.ClickedNextTrack()
+
+        
 
 
     def ClickedNextTrack(self):
-        SpotifyWebViewController().click_next_track_btn()
+        # SpotifyWebViewController().click_next_track_btn()
+        UIUpdateLogic(self.window).ClickNextTrack()
         
     
     def ClickedPrevTrack(self):
-        SpotifyWebViewController().click_prev_track_btn()
-        
+        # SpotifyWebViewController().click_prev_track_btn()
+        UIUpdateLogic(self.window).ClickPrevTrack()
 
     def ClickedTrack(self, item):
         # from WidgetDefinitions import TrackArtworkWidget, TrackTitle, PlayButtn
@@ -127,7 +139,7 @@ class UIHandler():
         found_objs = find_Objects(self.window, [PlaylistQueueLabel, PlaylistQueueTabel])
         SearchManager().perform_queue_loading(playlist_item, found_objs)
         # Programmatically click an item
-        item_index = 1  # Index of the item you want to click (0-based)
+        item_index = 0  # Index of the item you want to click (0-based)
         found_objs[1].itemClicked.emit(found_objs[1].item(item_index))
         
         """

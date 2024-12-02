@@ -151,7 +151,7 @@ class SearchManager:
             for playlist in self.playlists:
                 found_item = PlaylistItem(playlist['name'], playlist['owner']['display_name'], playlist['tracks']['total'], playlist['id'])
                 tableToUpdate.addItem(found_item)
-                print(found_item)
+                # print(found_item)
                 # pl_results = self.sp.playlist_tracks(playlist['id'], limit=5)
                 # print(pl_results['items'][0]['track']['id'])
         except Exception as e:
@@ -198,7 +198,7 @@ class SearchManager:
     pl_results['items'][0]['track'].keys() --> ['preview_url', 'available_markets', 'explicit', 'type', 'episode', 'track', 'album', 'artists', 'disc_number', 'track_number', 'duration_ms', 'external_ids', 'external_urls', 'href', 'id', 'name', 'popularity', 'uri', 'is_local']
     """
     def process_only_track_results(self, playlist_tracks):
-        print("\n-------ONLY TACK RESULTS--------\n")
+        # print("\n-------ONLY TACK RESULTS--------\n")
         # print(playlist_tracks['items'])
         # print("\n-------")
         # print(playlist_tracks['items'][0])

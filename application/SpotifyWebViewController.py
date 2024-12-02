@@ -87,11 +87,11 @@ class SpotifyWebViewController:
 
     def load_song(self, song_type: str, song_id: str):
         song_url = self.get_song_url(song_type, song_id)
-        print(f"MADE URL: {song_url} | len{len(song_url)} | type:{type(song_url)} ")
+        # print(f"MADE URL: {song_url} | len{len(song_url)} | type:{type(song_url)} ")
         WebviewWindow().change_url(song_url)
 
     def get_song_url(self, song_type, song_id):
-        print(f"type {song_type} | id {song_id}")
+        # print(f"type {song_type} | id {song_id}")
         if song_type == 'track':
             return f"https://open.spotify.com/embed/track/{song_id}"
         elif song_type == 'playlist':
@@ -118,12 +118,13 @@ class SpotifyWebViewController:
             value_stripped = progress_value.split()[1].strip('%;')
             progress_as_float = float(value_stripped)
             progress_as_int = int(progress_as_float)
-            print(progress_as_int)
-            print(progress_as_float)
+            # print(progress_as_int)
+            # print(progress_as_float)
             progress_number_result = progress_as_int
         return (progress_number_result)
     
     def track_time_progress(self):
+        stripped_time_element = "00:00"
         time_element, selector = WebviewDOM().find_element('[data-testid="progress-timestamp"]')
         if time_element:
             # print(f"Stripped: {time_element.text.strip()[1:]}")
@@ -135,6 +136,7 @@ class SpotifyWebViewController:
         iteration_count = 0
         max_iterations = 20  # Maximum number of attempts
         element = None
+        playbtnresult = "Not Found"
         while iteration_count < max_iterations and element is None:
             iteration_count += 1
             
@@ -142,9 +144,13 @@ class SpotifyWebViewController:
             print(f"Checking iteration {iteration_count}")
             
             element, selector = WebviewDOM().find_element('[data-testid="play-pause-button"]')
+            
 
             if element is not None:
-                print("Found element:", element.tag)
+                print(element.attributes['aria-label'])
+                # print("Found element:", element.tag)
+                # Should return 'play', 'pause', or 'Something went wrong'
+                playbtnresult = element.attributes['aria-label']
                 
                 # Add button click functionality
                 js_code = f'''
@@ -161,6 +167,8 @@ class SpotifyWebViewController:
 
         if iteration_count == max_iterations:
             print("Element not found after maximum attempts")
+            
+        return playbtnresult
 
 
             

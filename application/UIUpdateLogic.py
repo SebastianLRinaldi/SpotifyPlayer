@@ -27,12 +27,25 @@ class UIUpdateLogic():
     def __init__(self, window: QMainWindow):
         self.window = window
         
+        
+    def ClickNextTrack(self):
+        found_objs = find_aanObject(self.window, PlaylistQueueTabel)
+        for obj in found_objs:
+            if isinstance(obj, PlaylistQueueTabel):
+                obj.get_next_item()
+                
+    def ClickPrevTrack(self):
+        found_objs = find_aanObject(self.window, PlaylistQueueTabel)
+        for obj in found_objs:
+            if isinstance(obj, PlaylistQueueTabel):
+                obj.get_prev_item()
+        
     def updateUIOnTrackClick(self, item: TrackItem):
         # [TrackArtrwork, TrackTitle, TrackArtist, TrackID, TrackDuration, TrackPopularity, PlayButn]
         found_objs = find_Objectss(self.window, [TrackArtworkWidget, TrackTitle, TrackArtist, TrackID, TrackDuration, TrackPopularity, PlayButtn])
         
         for obj in found_objs:
-            print(obj)
+            # print(obj)
             if isinstance(obj, TrackArtworkWidget):
                 obj.setImage(item.cover_url)
                 

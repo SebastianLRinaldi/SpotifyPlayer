@@ -322,7 +322,7 @@ class TrackArtworkWidget(QLabel, IsolatedWidget):
                 # Set the pixmap scaled to widget size
                 pixmap = QPixmap.fromImage(image).scaled(300, 200, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation)
                 self.setPixmap(pixmap)
-                print(self.size())
+                # print(self.size())
             else:
                 print("Error loading image")
         else:
@@ -382,8 +382,8 @@ class TrackProgressWidget(QProgressBar, ConnectedWidget):
         if playlist/album in queue
             continue top of queue
         """
-        print("Checking!")
-        print(f"{self.track_running_duration} == {self.track_duration}")
+        # print("Checking!")
+        # print(f"{self.track_running_duration} == {self.track_duration}")
 
 
         # Check if the current duration is greater than the target time
@@ -394,6 +394,8 @@ class TrackProgressWidget(QProgressBar, ConnectedWidget):
             self.ui_handler.set_track_as_not_playing()
             self.ui_handler.set_plybtn_as_paused()
             self.reset()
+            
+            self.ui_handler.ClickedNextTrack()
             
             
         # Check if the current duration matches any target time
@@ -532,9 +534,6 @@ class SearchTextWidget(QLabel, IsolatedWidget):
         # Initialize QLabel with the text
         QLabel.__init__(self, text)
 
-    def somethingfunny(self):
-        """ A custom method for something funny. """
-        print("SOMETHING FUNNY")
         
 
         
@@ -642,11 +641,17 @@ class PlaylistQueueTabel(QListWidget, ConnectedWidget):
         # Initialize the QListWidget part (no need for super call as we're using QListWidget directly)
         QListWidget.__init__(self)
         
+        self.index = -1
         self.itemClicked.connect(self.on_item_clicked)
         
+        
     def on_item_clicked(self, item):
-        print(f"TrackObject: {item}")
-        self.ui_handler.ClickedTrack(item)
+        print(f"TrackObject From Queue Table: {item}")
+        
+        if item is not None:
+            self.index = self.get_index_from_item(item)
+            self.ui_handler.ClickedTrack(item)
+            print(f"itemINDEX: {self.index}")
         
         # found_objs = find_Objects(self.window, [TrackArtworkWidget, TrackTitle, PlayButtn])
         # found_objs[0].setImage(item.cover_url)
@@ -655,4 +660,34 @@ class PlaylistQueueTabel(QListWidget, ConnectedWidget):
 
     def get_queue_size(self):
         return self.count()
+    
+    def get_index_from_item(self, item: QListWidgetItem):
+        return self.indexFromItem(item).row()
+    
+    def get_item_from_index(self, index: int):
+        return self.itemFromIndex(index)
+    
+    def get_next_item(self):
+        """
+        Add error handling for if next item is None
+        - Alert UI of some how
+        """
+        print(f"+Changing Index to  {self.index+1}")
+        next_item = self.item(self.index+1)
+        self.itemClicked.emit(next_item)
+
+
+            
+    def get_prev_item(self):
+        """
+        Add error handling for if prev item is None
+        - Alert UI of some How
+        """
+        self.prev_clicked = True
+        print(f"-Changing Index to {self.index-1}")
+        self.itemClicked.emit(self.item(self.index-1))
+        
+    
+    
+    
 

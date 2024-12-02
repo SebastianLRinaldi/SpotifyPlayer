@@ -282,7 +282,7 @@ class Tab(QTabWidget):
             widgetRow = widget.widgetRow #i // 1
             widgetCol = widget.widgetCol#i % 1
             
-            print(f'TAB: {type(widget)}')
+            # print(f'TAB: {type(widget)}')
             if widgetRow == -1 or widgetCol == -1:
                 widgetRow = i // 1
                 widgetCol = i % 1
@@ -299,7 +299,7 @@ class GridLayout(QGridLayout):
             widgetRow = widget.widgetRow #i // 1
             widgetCol = widget.widgetCol#i % 1
             
-            print(f'WIDGET: {type(widget)}')
+            # print(f'WIDGET: {type(widget)}')
             if widgetRow == -1 or widgetCol == -1:
                 widgetRow = i // 1
                 widgetCol = i % 1

@@ -58,18 +58,19 @@ class WebviewDOM:
             else:
                 return None, selector
         except Exception as e:
-            # Main window failed to start
             print(f"Error finding element: {e}")
+            # Main window failed to start
+            WebviewWindow().change_url(webview.windows[0].get_current_url())
             return None, selector
     
     def mark_element(self, element, color='red'):
         # time.sleep(10)  # Wait for the page to load
-        print(f"Looking for element: {element}")
+        # print(f"Looking for element: {element}")
         selector = f'[{element}]'
         element = webview.windows[0].dom.get_element(selector)
         
         if element:
-            print("Found element:", element.tag)
+            # print("Found element:", element.tag)
             # Draw a red box around the element
             js_code = f'''
             var element = document.querySelector('{selector}');
@@ -108,7 +109,7 @@ class WebviewWindow:
         webview.windows[0].load_url(url)
         
     def start_webview(self, backend_logic, window, menuitems=[]):
-        webview.start(backend_logic, window, gui='qt', menu=menuitems, private_mode=False, debug=False)
+        webview.start(backend_logic, window, menu=menuitems, private_mode=False, debug=True)
         
     def set_and_start_window(self, backend_logic, url):
         self.window = webview.create_window('My Webview', url, x=508, y=840-135, width=724, height=135, background_color='#00FFFF', transparent=False, minimized=False,  shadow=False, on_top=False, frameless=True, easy_drag=True)
