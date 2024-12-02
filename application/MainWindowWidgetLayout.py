@@ -154,7 +154,8 @@ class TrackInfoPanel(BaseWidget):
         self.set_grid_layout(
             TrackArtworkWidget(),
             TrackProgressWidget(self.ui_handler),
-            TrackTitle()
+            TrackTitle(),
+            TrackRunningDuration(),
         )
         
         
@@ -185,9 +186,11 @@ class TrackDetailsPanel(BaseWidget):
             TrackArtworkWidget(),
             TrackTitle(),
             TrackArtist(),
-            TrackID(),
             TrackDuration(),
-            TrackPopularity()
+            TrackRunningDuration(),
+            TrackPopularity(),
+            TrackID(),
+
         )
         
 """

@@ -166,6 +166,9 @@ class UIHandler():
         value = SpotifyWebViewController().track_progress()
         return value
     
+    def send_track_progress(self):
+        UIUpdateLogic(self.window).send_current_track_duration()
+    
     def get_running_time_progress(self):
         value = SpotifyWebViewController().track_time_progress()
         return value

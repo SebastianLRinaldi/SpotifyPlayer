@@ -73,6 +73,20 @@ class UIUpdateLogic():
         for obj in found_objs:
             if isinstance(obj, TrackProgressWidget):
                 obj.set_track_duration(f"{item.duration}")
+                
+    # TrackProgressWidget, TrackRunningDuration
+                
+    def send_current_track_duration(self):
+        TrackProgressObjs = find_aanObject(self.window, TrackProgressWidget)
+        TrackTimeLabelObjs = find_aanObject(self.window, TrackRunningDuration)
+        
+        for TrackProgressobj in TrackProgressObjs:
+            if isinstance(TrackProgressobj, TrackProgressWidget):
+                for TrackTimeLabelobj in TrackTimeLabelObjs:
+                    if isinstance(TrackTimeLabelobj, TrackRunningDuration):
+                        TrackTimeLabelobj.setText(f"{TrackProgressobj.track_running_duration}")
+        
+        
         
     def set_track_as_playing(self):
         found_objs = find_aanObject(self.window, TrackProgressWidget)

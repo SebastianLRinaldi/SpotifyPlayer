@@ -54,6 +54,66 @@ This acts as my pub sub kinda
 #     found_window_objs = window.findChild(widgetToFind)
 #     return found_window_objs
 
+
+# """
+# Might need to make a contianer class
+# as well as a widget class per object I want to make
+# """
+# class WindowStyle:
+#     def setup_stylesheets(self: QWidget):
+#         # self.setStyleSheet("background-color: white;")
+#         self.setStyleSheet("""
+#             QWidget {
+#                 background-color: #1e1e2f;
+#                 color: white;
+#                 font-family: 'Roboto', sans-serif;
+#             }
+#             QListWidget::item:selected {
+#                 background-color: #D8BFD8;
+#                 color: white;
+#             }
+#             QListWidget::item {
+#                 background-color: white;
+#             }
+#             QLabel {
+#                 font-weight: bold;
+#             }
+#             QLineEdit {
+#                 background-color: #2c2c3b;
+#                 color: white;
+#                 border: 1px solid #3a3a4a;
+#                 border-radius: 20px;
+#                 padding: 10px;
+#                 font-size: 14px;
+#             }
+#             QPushButton {
+#                 background-color: #3a3a4a;
+#                 color: white;
+#                 border: none;
+#                 border-radius: 20px;
+#                 padding: 10px;
+#                 font-size: 14px;
+#                 font-family: 'Roboto', sans-serif;
+#             }
+#             QPushButton:hover {
+#                 background-color: #454d5b;
+#             }
+#             QProgressBar {
+#                 text-align: center;
+#                 background-color: #2c2c3b;
+#                 border: 1px solid #3a3a4a;
+#                 border-radius: 10px;
+#                 height: 8px;
+#                 font-size: 12px;
+#             }
+#             QProgressBar::chunk {
+#                 background-color: purple;
+#                 border-radius: 5px;
+#             }
+#         """)
+
+
+
 class ConnectedWidget(QWidget):
     def __init__(self, ui_handler, widgetRow=-1, widgetCol=-1, *args, **kwargs):
         """
@@ -70,6 +130,7 @@ class ConnectedWidget(QWidget):
         self.ui_handler = ui_handler
         self.widgetRow = widgetRow
         self.widgetCol = widgetCol
+
         
         
 class IsolatedWidget(QWidget):
@@ -86,63 +147,9 @@ class IsolatedWidget(QWidget):
         self.widgetRow = widgetRow
         self.widgetCol = widgetCol
         # No UI control logic here, this widget is Isolated.
+ 
         
         
-
-
-
-
-"""
-Might need to make a contianer class
-as well as a widget class per object I want to make
-"""
-class WindowStyle:
-    def setup_stylesheets(self):
-        # self.setStyleSheet("background-color: white;")
-        self.setStyleSheet("""
-            QWidget {
-                background-color: #1e1e2f;
-                color: white;
-                font-family: 'Roboto', sans-serif;
-            }
-            QLabel {
-                font-weight: bold;
-            }
-            QLineEdit {
-                background-color: #2c2c3b;
-                color: white;
-                border: 1px solid #3a3a4a;
-                border-radius: 20px;
-                padding: 10px;
-                font-size: 14px;
-            }
-            QPushButton {
-                background-color: #3a3a4a;
-                color: white;
-                border: none;
-                border-radius: 20px;
-                padding: 10px;
-                font-size: 14px;
-                font-family: 'Roboto', sans-serif;
-            }
-            QPushButton:hover {
-                background-color: #454d5b;
-            }
-            QProgressBar {
-                text-align: center;
-                background-color: #2c2c3b;
-                border: 1px solid #3a3a4a;
-                border-radius: 10px;
-                height: 8px;
-                font-size: 12px;
-            }
-            QProgressBar::chunk {
-                background-color: purple;
-                border-radius: 5px;
-            }
-        """)
-
-
 
 
 
@@ -205,6 +212,12 @@ class TrackID(QLabel, IsolatedWidget):
 
 
 class TrackDuration(QLabel, IsolatedWidget):
+    def __init__(self, text="No duration in ms for track", widgetRow=-1, widgetCol=-1):
+        super().__init__(widgetRow, widgetCol)
+        self.setText(text)
+        
+
+class TrackRunningDuration(QLabel, ConnectedWidget):
     def __init__(self, text="No duration in ms for track", widgetRow=-1, widgetCol=-1):
         super().__init__(widgetRow, widgetCol)
         self.setText(text)
@@ -368,6 +381,7 @@ class TrackProgressWidget(QProgressBar, ConnectedWidget):
         
         time_value = self.ui_handler.get_running_time_progress()
         self.set_track_running_duration(time_value)
+        self.ui_handler.send_track_progress()
         print(f"Time: {time_value}")
         
         self.check_if_track_is_over()
@@ -641,14 +655,25 @@ class PlaylistQueueTabel(QListWidget, ConnectedWidget):
         # Initialize the QListWidget part (no need for super call as we're using QListWidget directly)
         QListWidget.__init__(self)
         
+        # self.setStyleSheet("""
+        # QListWidget::item:selected {
+        #     background-color: lightblue;
+        #     color: black;
+        # }
+        # QListWidget::item {
+        #     background-color: white;
+        # }
+        # """)
+        
         self.index = -1
         self.itemClicked.connect(self.on_item_clicked)
         
         
-    def on_item_clicked(self, item):
+    def on_item_clicked(self, item: QListWidgetItem):
         print(f"TrackObject From Queue Table: {item}")
         
         if item is not None:
+            item.setSelected(True)
             self.index = self.get_index_from_item(item)
             self.ui_handler.ClickedTrack(item)
             print(f"itemINDEX: {self.index}")

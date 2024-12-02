@@ -43,7 +43,8 @@ class Window(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("My Window")
-        self.resize(400, 300)
+        self.resize(600, 600)
+        self.setup_stylesheets()
 
 
     def setup_central_widget(self, *widgets):
@@ -53,6 +54,101 @@ class Window(QMainWindow):
 
     def show_window(self):
         self.show()
+        
+    def setup_stylesheets(self):
+        """
+        Apply styles directly to the QMainWindow and its children.
+        """
+        self.setStyleSheet("""
+            QMainWindow {
+                background-color: #1e1e2f; /* Dark background */
+            }
+            QLabel {
+                color: #E6E6FA; /* Light Purple */
+                font-weight: bold;
+            }
+            QLineEdit {
+                background-color: #2c2c3b;
+                color: #D8BFD8; /* Light Purple */
+                border: 1px solid #D8BFD8;
+                border-radius: 10px;
+                padding: 5px;
+                font-size: 14px;
+            }
+
+            QListWidget {
+                background-color: #2c2c3b; /* Darker background for list */
+                color: #E6E6FA; /* Light Purple text */
+                border: 1px solid #D8BFD8; /* Light Purple Border */
+                border-radius: 10px;
+                padding: 5px;
+            }
+
+            QListWidget::item {
+                background-color: #2c2c3b; /* Match background */
+                color: #D8BFD8; /* Light Purple for list items */
+                border: none;
+                padding: 5px;
+            }
+
+            QListWidget::item:selected {
+                background-color: #D8BFD8; /* Light Purple for selected item */
+                color: #1e1e2f; /* Dark text for contrast */
+                border-radius: 5px;
+            }
+
+            QTabWidget::pane {
+                background-color: #1e1e2f; /* Match background with main window */
+                border: 1px solid #D8BFD8; /* Light Purple Border */
+                border-radius: 10px;
+            }
+
+            QTabWidget::tab-bar {
+                alignment: center;
+            }
+
+            QTabBar::tab {
+                background: #2c2c3b; /* Darker background for tabs */
+                color: #D8BFD8; /* Light Purple text */
+                border: 1px solid #D8BFD8;
+                border-radius: 10px;
+                padding: 5px;
+                margin: 2px;
+            }
+
+            QTabBar::tab:selected {
+                background: #D8BFD8; /* Highlight active tab */
+                color: #1e1e2f; /* Dark text on active tab */
+            }
+
+            QTabBar::tab:hover {
+                background: #E6E6FA; /* Lighter Purple on hover */
+            }
+            
+            QPushButton {
+                background-color: #D8BFD8; /* Light Purple */
+                color: white;
+                border: none;
+                border-radius: 10px;
+                padding: 10px;
+                font-size: 14px;
+            }
+            QPushButton:hover {
+                background-color: #E6E6FA; /* Lighter Purple on Hover */
+            }
+            QProgressBar {
+                text-align: center;
+                background-color: #2c2c3b;
+                border: 1px solid #D8BFD8;
+                border-radius: 10px;
+                height: 8px;
+                font-size: 12px;
+            }
+            QProgressBar::chunk {
+                background-color: #E6E6FA; /* Light Purple Chunk */
+                border-radius: 5px;
+            }
+        """)
         
 
 
