@@ -42,7 +42,7 @@ This acts as my pub sub kinda
     with the find object functions below
 """
 class ConnectedWidget(QWidget):
-    def __init__(self, ui_handler, widgetRow=-1, widgetCol=-1, *args, **kwargs):
+    def __init__(self, ui_handler, widgetRow=-1, widgetCol=-1, widgetRowSpan=-1, widgetColSpan=-1, *args, **kwargs):
         """
         Base class for widgets that initializes common properties like ui_handler,
         widgetRow, and widgetCol.
@@ -57,11 +57,11 @@ class ConnectedWidget(QWidget):
         self.ui_handler = ui_handler
         self.widgetRow = widgetRow
         self.widgetCol = widgetCol
-
-        
+        self.widgetRowSpan = widgetRowSpan 
+        self.widgetColSpan = widgetColSpan
         
 class IsolatedWidget(QWidget):
-    def __init__(self, widgetRow=-1, widgetCol=-1, *args, **kwargs):
+    def __init__(self, widgetRow=-1, widgetCol=-1, widgetRowSpan=-1, widgetColSpan=-1, *args, **kwargs):
         """
         Base class for widgets that do not control or update other elements in the UI.
 
@@ -73,48 +73,49 @@ class IsolatedWidget(QWidget):
         super().__init__(*args, **kwargs)
         self.widgetRow = widgetRow
         self.widgetCol = widgetCol
-        # No UI control logic here, this widget is Isolated.
+        self.widgetRowSpan = widgetRowSpan 
+        self.widgetColSpan = widgetColSpan 
 
 class Button(QPushButton):
-    def __init__(self, text="Click me!", widgetRow = -1, widgetCol = -1):
+    def __init__(self, text="Click me!", widgetRow=-1, widgetCol=-1, widgetRowSpan=-1, widgetColSpan=-1):
         super().__init__(text)
         self.widgetRow = widgetRow
         self.widgetCol = widgetCol
 
 
 class TrackTitle(QLabel, IsolatedWidget):
-    def __init__(self, text="No track selected", widgetRow=-1, widgetCol=-1):
-        super().__init__(widgetRow, widgetCol)
+    def __init__(self, text="No track selected", widgetRow=-1, widgetCol=-1, widgetRowSpan=-1, widgetColSpan=-1):
+        super().__init__(widgetRow=widgetRow, widgetCol=widgetCol, widgetRowSpan=widgetRowSpan, widgetColSpan=widgetColSpan)
         self.setText(text)
 
 
 class TrackArtist(QLabel, IsolatedWidget):
-    def __init__(self, text="No artist for track", widgetRow=-1, widgetCol=-1):
-        super().__init__(widgetRow, widgetCol)
+    def __init__(self, text="No artist for track", widgetRow=-1, widgetCol=-1, widgetRowSpan=-1, widgetColSpan=-1):
+        super().__init__(widgetRow=widgetRow, widgetCol=widgetCol, widgetRowSpan=widgetRowSpan, widgetColSpan=widgetColSpan)
         self.setText(text)
 
 
 class TrackID(QLabel, IsolatedWidget):
-    def __init__(self, text="No id for track", widgetRow=-1, widgetCol=-1):
-        super().__init__(widgetRow, widgetCol)
+    def __init__(self, text="No id for track", widgetRow=-1, widgetCol=-1, widgetRowSpan=-1, widgetColSpan=-1):
+        super().__init__(widgetRow=widgetRow, widgetCol=widgetCol, widgetRowSpan=widgetRowSpan, widgetColSpan=widgetColSpan)
         self.setText(text)
 
 
 class TrackDuration(QLabel, IsolatedWidget):
-    def __init__(self, text="No duration in ms for track", widgetRow=-1, widgetCol=-1):
-        super().__init__(widgetRow, widgetCol)
+    def __init__(self, text="No duration in ms for track", widgetRow=-1, widgetCol=-1, widgetRowSpan=-1, widgetColSpan=-1):
+        super().__init__(widgetRow=widgetRow, widgetCol=widgetCol, widgetRowSpan=widgetRowSpan, widgetColSpan=widgetColSpan)
         self.setText(text)
         
 
 class TrackRunningDuration(QLabel, ConnectedWidget):
-    def __init__(self, text="No duration in ms for track", widgetRow=-1, widgetCol=-1):
-        super().__init__(widgetRow, widgetCol)
+    def __init__(self, ui_handler, text="No duration in ms for track", widgetRow=-1, widgetCol=-1, widgetRowSpan=-1, widgetColSpan=-1):
+        super().__init__(ui_handler, widgetRow=widgetRow, widgetCol=widgetCol, widgetRowSpan=widgetRowSpan, widgetColSpan=widgetColSpan)
         self.setText(text)
 
 
 class TrackPopularity(QLabel, IsolatedWidget):
-    def __init__(self, text="No popularity for track", widgetRow=-1, widgetCol=-1):
-        super().__init__(widgetRow, widgetCol)
+    def __init__(self, text="No popularity for track", widgetRow=-1, widgetCol=-1, widgetRowSpan=-1, widgetColSpan=-1):
+        super().__init__(widgetRow=widgetRow, widgetCol=widgetCol, widgetRowSpan=widgetRowSpan, widgetColSpan=widgetColSpan)
         self.setText(text)
         
 
@@ -132,9 +133,9 @@ so when in car if something doesn't work I can find them and update them without
 needing to get out keyboard or something?
 """
 class TrackArtworkWidget(QLabel, IsolatedWidget):
-    def __init__(self, text="Click me!", widgetRow=-1, widgetCol=-1):
+    def __init__(self, text="Click me!", widgetRow=-1, widgetCol=-1, widgetRowSpan=-1, widgetColSpan=-1,):
         # Initialize IsolatedWidget with row and column info
-        super().__init__(widgetRow=widgetRow, widgetCol=widgetCol)
+        super().__init__(widgetRow=widgetRow, widgetCol=widgetCol, widgetRowSpan=widgetRowSpan, widgetColSpan=widgetColSpan)
     
         # Fixed size for the artwork widget
         self.setFixedSize(200, 200)
@@ -178,8 +179,8 @@ class TrackArtworkWidget(QLabel, IsolatedWidget):
             print("Network error:", reply.errorString())
 
 class TrackProgressWidget(QProgressBar, ConnectedWidget):
-    def __init__(self, ui_handler, widgetRow = -1, widgetCol = -1):
-        super().__init__(ui_handler, widgetRow, widgetCol)
+    def __init__(self, ui_handler, widgetRow=-1, widgetCol=-1, widgetRowSpan=-1, widgetColSpan=-1):
+        super().__init__(ui_handler, widgetRow=widgetRow, widgetCol=widgetCol, widgetRowSpan=widgetRowSpan, widgetColSpan=widgetColSpan)
         
         self.setRange(0, 100)
         self.setAlignment(Qt.AlignCenter)
@@ -188,9 +189,7 @@ class TrackProgressWidget(QProgressBar, ConnectedWidget):
         self.setValue(0)
         self.track_duration = ""
         self.track_running_duration = ""
-    
-        
-        
+
         # Timer to update the progress
         self.timer = QTimer(self)
         self.timer.setInterval(1000)  # Update every 1 second
@@ -280,8 +279,8 @@ it can be done here is strange but when we have two or more playbtns
 we will need to update them all so this works fine
 """
 class PlayButtn(QPushButton, ConnectedWidget):
-    def __init__(self, ui_handler, text="PLAY", widgetRow = -1, widgetCol = -1):
-        ConnectedWidget.__init__(self, ui_handler, widgetRow, widgetCol)
+    def __init__(self, ui_handler, text="PLAY", widgetRow=-1, widgetCol=-1, widgetRowSpan=-1, widgetColSpan=-1,):
+        ConnectedWidget.__init__(self, ui_handler, widgetRow=widgetRow, widgetCol=widgetCol, widgetRowSpan=widgetRowSpan, widgetColSpan=widgetColSpan)
         QPushButton.__init__(self, text)
 
         self.is_playing = False
@@ -304,7 +303,6 @@ class PlayButtn(QPushButton, ConnectedWidget):
         
     
     def update_playbtn_state(self):
-        
         """
         if self.is_playing is True: when clicked
             pause the song
@@ -328,9 +326,9 @@ When we add shuffle it will place the currently selected song at top so you don'
 to go through the queue without worring about hitting the bttom right after you shuffle
 """
 class NextTrackButtn(QPushButton, ConnectedWidget):
-    def __init__(self, ui_handler, text="NEXT", widgetRow=-1, widgetCol=-1):
+    def __init__(self, ui_handler, text="NEXT", widgetRow=-1, widgetCol=-1, widgetRowSpan=-1, widgetColSpan=-1,):
         # Call the ConnectedWidget constructor for shared initialization
-        super().__init__(ui_handler, widgetRow, widgetCol)
+        super().__init__(ui_handler, widgetRow=widgetRow, widgetCol=widgetCol, widgetRowSpan=widgetRowSpan, widgetColSpan=widgetColSpan)
         # Initialize the QPushButton part with the text
         QPushButton.__init__(self, text)
 
@@ -339,9 +337,9 @@ class NextTrackButtn(QPushButton, ConnectedWidget):
 
 
 class PrevousTrackButtn(QPushButton, ConnectedWidget):
-    def __init__(self, ui_handler, text="PREV", widgetRow=-1, widgetCol=-1):
+    def __init__(self, ui_handler, text="PREV", widgetRow=-1, widgetCol=-1, widgetRowSpan=-1, widgetColSpan=-1,):
         # Call the ConnectedWidget constructor for shared initialization
-        super().__init__(ui_handler, widgetRow, widgetCol)
+        super().__init__(ui_handler, widgetRow=widgetRow, widgetCol=widgetCol, widgetRowSpan=widgetRowSpan, widgetColSpan=widgetColSpan)
         # Initialize the QPushButton part with the text
         QPushButton.__init__(self, text)
 
@@ -351,14 +349,13 @@ class PrevousTrackButtn(QPushButton, ConnectedWidget):
 
 
 class SearchBarWidget(QLineEdit, ConnectedWidget):
-    def __init__(self, ui_handler, text="Search...", widgetRow=-1, widgetCol=-1):
+    def __init__(self, ui_handler, text="Search...", widgetRow=-1, widgetCol=-1, widgetRowSpan=-1, widgetColSpan=-1,):
         # Initialize the ConnectedWidget to handle common properties
-        super().__init__(ui_handler, widgetRow, widgetCol)
+        super().__init__(ui_handler, widgetRow=widgetRow, widgetCol=widgetCol, widgetRowSpan=widgetRowSpan, widgetColSpan=widgetColSpan)
         # Initialize the QLineEdit with the given text
         QLineEdit.__init__(self, text)
         self.returnPressed.connect(lambda: self.find_update_objects_and_search())
 
-     
     def find_update_objects_and_search(self):
         # objList = [SearchTextWidget, TrackTabel, AlbumsTabel, ArtistsTabel, PlaylistsTabel]
         # found_window_objs = find_Objects(self.window, objList)
@@ -366,9 +363,9 @@ class SearchBarWidget(QLineEdit, ConnectedWidget):
 
 
 class SearchTextWidget(QLabel, IsolatedWidget):
-    def __init__(self, text="Result will appear here", widgetRow=-1, widgetCol=-1):
+    def __init__(self, text="Result will appear here", widgetRow=-1, widgetCol=-1, widgetRowSpan=-1, widgetColSpan=-1,):
         # Initialize IsolatedWidget for handling row and column
-        super().__init__(widgetRow=widgetRow, widgetCol=widgetCol)
+        super().__init__(widgetRow=widgetRow, widgetCol=widgetCol, widgetRowSpan=widgetRowSpan, widgetColSpan=widgetColSpan)
         
         # Initialize QLabel with the text
         QLabel.__init__(self, text)
@@ -419,10 +416,8 @@ class ArtistsTabel(QListWidget, ConnectedWidget):
     def __init__(self, ui_handler, widgetRow=-1, widgetCol=-1):
         super().__init__(ui_handler, widgetRow, widgetCol)
         QListWidget.__init__(self)
-
-        
         self.itemClicked.connect(self.on_item_clicked)
-        
+
     def on_item_clicked(self, item):
         print(f"ArtistObject: {item}")
         self.ui_handler.ClickedArtist(item)

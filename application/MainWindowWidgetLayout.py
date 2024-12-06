@@ -30,7 +30,7 @@ import threading
 from queue import Queue
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
-
+from typing import Union
 
 """
 Will need to use something called pub/sub method for getting ui elements to talk together
@@ -71,9 +71,9 @@ class PlayerControls(BaseWidget):
         
         # Create and arrange buttons/widgets specific to PlayerControls
         self.set_grid_layout(
-            PlayButtn(self.ui_handler),  # Pass window and UIHandler
-            PrevousTrackButtn(self.ui_handler),
-            NextTrackButtn(self.ui_handler)
+            PlayButtn(self.ui_handler, widgetRow=0, widgetCol=0, widgetRowSpan=1, widgetColSpan=2),  # Pass window and UIHandler
+            PrevousTrackButtn(self.ui_handler, widgetRow=1, widgetCol=0, widgetRowSpan=1, widgetColSpan=1),
+            NextTrackButtn(self.ui_handler, widgetRow=1, widgetCol=1, widgetRowSpan=1, widgetColSpan=1)
         )
         
 
@@ -92,7 +92,12 @@ class PlayerQueue(BaseWidget):
 class DebugPanel(BaseWidget):
     def __init__(self, window: QMainWindow, widgetRow = -1, widgetCol = -1):
         super().__init__(window, widgetRow, widgetCol)
-        
+        """
+        Would be nice to also have a drop down with all the widgets and there properties 
+        a way to input a number change
+        and a btn to update the widget visually
+        and as seperate butn to save changes to like a style file
+        """
         # Create and arrange buttons/widgets specific to PlayerControls
         self.set_grid_layout(
             DebugElementWidget(self.ui_handler),
@@ -111,10 +116,10 @@ class TrackInfoPanel(BaseWidget):
         
         # Use the inherited set_grid_layout method to set the layout
         self.set_grid_layout(
-            TrackArtworkWidget(),
-            TrackProgressWidget(self.ui_handler),
-            TrackTitle(),
-            TrackRunningDuration(),
+            TrackArtworkWidget(widgetRow=0, widgetCol=0, widgetRowSpan=2, widgetColSpan=1),
+            TrackTitle(widgetRow=0, widgetCol=1, widgetRowSpan=1, widgetColSpan=1),
+            TrackRunningDuration(self.ui_handler, widgetRow=1, widgetCol=1, widgetRowSpan=1, widgetColSpan=1),
+            TrackProgressWidget(self.ui_handler, widgetRowSpan=1, widgetColSpan=2),
         )
         
 
@@ -129,7 +134,7 @@ class TrackDetailsPanel(BaseWidget):
             TrackTitle(),
             TrackArtist(),
             TrackDuration(),
-            TrackRunningDuration(),
+            TrackRunningDuration(self.ui_handler),
             TrackPopularity(),
             TrackID(),
 
@@ -177,11 +182,13 @@ class SearchResultsTables(BaseWidget):
 Layout controlers
 '''
 class Tab(QTabWidget):
-    def __init__(self, window: QMainWindow, widgetRow = -1, widgetCol = -1):
+    def __init__(self, window: QMainWindow, widgetRow=-1, widgetCol=-1, widgetRowSpan=-1, widgetColSpan=-1 ):
         super().__init__()
         self.parent = window
         self.widgetRow = widgetRow
         self.widgetCol = widgetCol
+        self.widgetRowSpan = widgetRowSpan 
+        self.widgetColSpan = widgetColSpan 
         
     def add_widges_to_tab(self, *widgets, title="New Tab"):
         new_tab = QWidget()
@@ -204,17 +211,33 @@ class Tab(QTabWidget):
 class GridLayout(QGridLayout):
     def __init__(self, *widgets):
         super().__init__()  # No arguments here
-        for i, widget in enumerate(widgets):
-            widgetRow = widget.widgetRow #i // 1
-            widgetCol = widget.widgetCol#i % 1
+        for index, widget in enumerate(widgets):
+            self.setWidgetPosition(index, widget)
+
+    def setWidgetPosition(self, index, widget: Union[ConnectedWidget, IsolatedWidget]):
+        # print(f'WIDGET: {type(widget)}')
+        widgetRow = widget.widgetRow
+        widgetCol = widget.widgetCol
+        
+        if widgetRow == -1 or widgetCol == -1:
+            widgetRow = index // 1
+            widgetCol = index % 1
             
-            # print(f'WIDGET: {type(widget)}')
-            if widgetRow == -1 or widgetCol == -1:
-                widgetRow = i // 1
-                widgetCol = i % 1
-                self.addWidget(widget, widgetRow, widgetCol)
+            # Allow setting span when not negative
+            if widget.widgetRowSpan != -1 and widget.widgetColSpan != -1:
+                self.addWidget(widget, widgetRow, widgetCol, widget.widgetRowSpan, widget.widgetColSpan)
             else:
                 self.addWidget(widget, widgetRow, widgetCol)
+        else:
+            # Allow setting span when not negative
+            if widget.widgetRowSpan != -1 and widget.widgetColSpan != -1:
+                self.addWidget(widget, widgetRow, widgetCol, widget.widgetRowSpan, widget.widgetColSpan)
+            else:
+                self.addWidget(widget, widgetRow, widgetCol)
+
+
+
+
 
 class Widget(QWidget):
     def __init__(self, layout=None):
