@@ -11,8 +11,37 @@
   - when I have some more money for the electronics for testing and implementation inside my car. 
 
 ---
+# Features
+- Backend
+  - Spotify API for Searching Song Content
+    - 1 query = 4 types of content results
+  - Webview for Controlling Music
+- Front End
+  - Song Queue
+    -  Songs can be selected from queue while keeping queue position
+  - Player Controls 
+    - Play, Pause,
+    - Next, Prevous (if loaded in queue)
+  - Track Details and Visuals 
+    - Artwork for track
+    - Load bar of tracks progress
+    - Running time of current track
+    - Artist, Total Duration, Popularity, ID of track
+  
+- Future Features
+  - Work on more UI sizing and themes for touch screen
+  - Load Artwork image next to table items 
+  - Load more than 10 items - threaded search results  
+  - Albums loaded into queue same as playlist
+  - Not sure what to do with the Artist Info yet
+  - Modify Playlist from Users Spotify account via API
+    - Make, edit, remove; new and old playlist and track content
+    - Some button on player panel with a drop down action menu    
+  - Seek 5,10,15,30,60 secs in a track 
+---
 # My Current UI Styled Player Demo | Version 2 | Theme: RedSynth
-![RedSynthThemePlayerDemo-optimize](https://github.com/user-attachments/assets/1e271356-41ab-49dc-9115-f43c54b75ec9)
+![RedSynthThemePlayerDemo-optimize](https://github.com/user-attachments/assets/fe38d69d-fe40-40e9-a992-f298a30b5cd5)
+
 
 https://github.com/user-attachments/assets/16b82cee-a93d-4cb0-b4bd-2342dd81cbb5
 
