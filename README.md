@@ -37,7 +37,9 @@
   - Modify Playlist from Users Spotify account via API
     - Make, edit, remove; new and old playlist and track content
     - Some button on player panel with a drop down action menu    
-  - Seek 5,10,15,30,60 secs in a track 
+  - Seek 5,10,15,30,60 secs in a track
+  - Option to autoload more content in current when its empty from spotify recommended playlist
+  - Add single tracks to queue table 
 ---
 # My Current UI Styled Player Demo | Version 2 | Theme: RedSynth
 ![RedSynthThemePlayerDemo-optimize](https://github.com/user-attachments/assets/fe38d69d-fe40-40e9-a992-f298a30b5cd5)
