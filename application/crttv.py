@@ -10,7 +10,7 @@ class AnimatedColorSeparationLabel(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
         # self.setAlignment(Qt.AlignCenter)
-        self.BackgroundColor = "black"
+        self.BackgroundColor = "white"
         self.colorOverlay = True
         self.setStyleSheet(f"color: white; background-color: {self.BackgroundColor};")
         
@@ -32,29 +32,31 @@ class AnimatedColorSeparationLabel(QWidget):
         if self.BackgroundColor == "black":
             # Define keyframe-like opacity values (from your CSS flicker) 
             # Values can be either 255-0 or 1.0-0.0 but they must match for same animation
-            self.flicker_animation.setKeyValueAt(0.0, 0.95)  # Start at the highest opacity
-            self.flicker_animation.setKeyValueAt(0.1, 0.91)  # Slight drop
-            self.flicker_animation.setKeyValueAt(0.2, 0.93)  # Bounce back up
-            self.flicker_animation.setKeyValueAt(0.3, 0.87)  # Subtle drop
-            self.flicker_animation.setKeyValueAt(0.4, 0.91)  # Slight rise
-            self.flicker_animation.setKeyValueAt(0.5, 0.93)  # Bounce back up
-            self.flicker_animation.setKeyValueAt(0.6, 0.87)  # Slight drop
-            self.flicker_animation.setKeyValueAt(0.7, 0.89)  # Subtle rise
-            self.flicker_animation.setKeyValueAt(0.8, 0.87)  # Gentle drop
-            self.flicker_animation.setKeyValueAt(0.9, 0.92)  # Slight rise
-            self.flicker_animation.setKeyValueAt(1.0, 0.95)  # End at the highest opacity
+            self.flicker_animation.setKeyValueAt(0.0, 1.0)  # Start at full opacity
+            self.flicker_animation.setKeyValueAt(0.05, random.uniform(0.7, 0.9))  # Slight dimming
+            self.flicker_animation.setKeyValueAt(0.1, random.uniform(0.8, 1.0))  # Slight bounce
+            self.flicker_animation.setKeyValueAt(0.2, random.uniform(0.4, 0.8))  # Deeper drop
+            self.flicker_animation.setKeyValueAt(0.3, random.uniform(0.9, 1.0))  # Subtle recovery
+            self.flicker_animation.setKeyValueAt(0.4, random.uniform(0.0, 0.6))  # Strong flicker
+            self.flicker_animation.setKeyValueAt(0.5, random.uniform(0.7, 0.9))  # Stabilizing
+            self.flicker_animation.setKeyValueAt(0.6, random.uniform(0.6, 1.0))  # Variation
+            self.flicker_animation.setKeyValueAt(0.7, random.uniform(0.2, 0.8))  # Sharp drop
+            self.flicker_animation.setKeyValueAt(0.8, random.uniform(0.8, 1.0))  # Back to near full
+            self.flicker_animation.setKeyValueAt(0.9, random.uniform(0.7, 1.0))  # Final rise
+            self.flicker_animation.setKeyValueAt(1.0, 1.0)  # End at full opacity
         else:
-            self.flicker_animation.setKeyValueAt(0.0, 0.15)  # Start at the highest opacity
-            self.flicker_animation.setKeyValueAt(0.1, 0.11)  # Slight drop
-            self.flicker_animation.setKeyValueAt(0.2, 0.13)  # Bounce back up
-            self.flicker_animation.setKeyValueAt(0.3, 0.07)  # Subtle drop
-            self.flicker_animation.setKeyValueAt(0.4, 0.11)  # Slight rise
-            self.flicker_animation.setKeyValueAt(0.5, 0.13)  # Bounce back up
-            self.flicker_animation.setKeyValueAt(0.6, 0.07)  # Slight drop
-            self.flicker_animation.setKeyValueAt(0.7, 0.09)  # Subtle rise
-            self.flicker_animation.setKeyValueAt(0.8, 0.07)  # Gentle drop
-            self.flicker_animation.setKeyValueAt(0.9, 0.12)  # Slight rise
-            self.flicker_animation.setKeyValueAt(1.0, 0.15)  # End at the highest opacity
+            self.flicker_animation.setKeyValueAt(0.0, 0.15)  # Start at highest opacity
+            self.flicker_animation.setKeyValueAt(0.05, random.uniform(0.10, 0.14))  # Slight dimming
+            self.flicker_animation.setKeyValueAt(0.1, random.uniform(0.11, 0.15))  # Subtle bounce
+            self.flicker_animation.setKeyValueAt(0.2, random.uniform(0.07, 0.12))  # Deeper drop
+            self.flicker_animation.setKeyValueAt(0.3, random.uniform(0.12, 0.15))  # Subtle recovery
+            self.flicker_animation.setKeyValueAt(0.4, random.uniform(0.06, 0.10))  # Sharp flicker
+            self.flicker_animation.setKeyValueAt(0.5, random.uniform(0.10, 0.13))  # Stabilizing
+            self.flicker_animation.setKeyValueAt(0.6, random.uniform(0.07, 0.15))  # Variation
+            self.flicker_animation.setKeyValueAt(0.7, random.uniform(0.05, 0.09))  # Sharp drop
+            self.flicker_animation.setKeyValueAt(0.8, random.uniform(0.08, 0.13))  # Gentle recovery
+            self.flicker_animation.setKeyValueAt(0.9, random.uniform(0.12, 0.15))  # Final rise
+            self.flicker_animation.setKeyValueAt(1.0, 0.15)  # End at full opacity
 
         # Connect the animation's value change signal to a function that updates the opacity
         self.flicker_animation.valueChanged.connect(self.update_opacity)
@@ -87,9 +89,17 @@ class AnimatedColorSeparationLabel(QWidget):
 
     @colorOffsets.setter
     def colorOffsets(self, value):
-        self.red_offset = random.uniform(-3, 1)#value.x()  # Use x() for red offset
-        self.blue_offset = random.uniform(-1, 3) #value.y()  # Use y() for blue offset
-        self.yellow_offset = random.uniform(-2, 2)  # Randomize yellow offset
+        
+        
+        if self.BackgroundColor == "black":
+            self.red_offset = random.uniform(-3, 1)#value.x()  # Use x() for red offset
+            self.blue_offset = random.uniform(-1, 3) #value.y()  # Use y() for blue offset
+            self.yellow_offset = random.uniform(-2, 2)  # Randomize yellow offset
+            
+        else:
+            self.red_offset = random.uniform(-2, 1)#value.x()  # Use x() for red offset
+            self.blue_offset = random.uniform(-1, 2) #value.y()  # Use y() for blue offset
+            self.yellow_offset = random.uniform(-2, 2)  # Randomize yellow offset
         self.update()  # Trigger repaint
 
     def update_opacity(self, value):
