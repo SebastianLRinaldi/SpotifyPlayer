@@ -186,10 +186,11 @@ class Window(QMainWindow):
         self.setup_stylesheets()
         
     def add_overlay(self):
+        pass
         # Add the CRT overlay widget
-        self.overlay = CRTOverlayWidget(self)
-        self.overlay.raise_()  # Ensure overlay is on top
-        self.overlay.show()
+        # self.overlay = CRTOverlayWidget(self)
+        # self.overlay.raise_()  # Ensure overlay is on top
+        # self.overlay.show()
 
 
     def setup_central_widget(self, *widgets):
