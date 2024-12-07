@@ -34,12 +34,18 @@
   - Load more than 10 items - threaded search results  
   - Albums loaded into queue same as playlist
   - Not sure what to do with the Artist Info yet
+  - Add single tracks to queue table 
   - Modify Playlist from Users Spotify account via API
     - Make, edit, remove; new and old playlist and track content
     - Some button on player panel with a drop down action menu    
   - Seek 5,10,15,30,60 secs in a track
-  - Option to autoload more content in current when its empty from spotify recommended playlist
-  - Add single tracks to queue table 
+  - Option to autoload more content in queue when its empty from a spotify playlist
+    - recommended playlist or some default
+    - I would like to hear new music so unheard or new songs or new recommendations instead of old
+    - Add new music from what you have been listening to in the queue;
+      - like how on spotify it has recommended related music addtions for custom playlist
+  - Make new playlist based on vibe gradient (sad <--> happy) (Heavy Metal <--> Soft Rock) (Jazz <--> Funky) 
+  
 ---
 # My Current UI Styled Player Demo | Version 2 | Theme: RedSynth
 ![RedSynthThemePlayerDemo-optimize](https://github.com/user-attachments/assets/fe38d69d-fe40-40e9-a992-f298a30b5cd5)
