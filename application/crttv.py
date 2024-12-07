@@ -44,7 +44,7 @@ class AnimatedColorSeparationLabel(QWidget):
             self.flicker_animation.setKeyValueAt(0.9, 0.92)  # Slight rise
             self.flicker_animation.setKeyValueAt(1.0, 0.95)  # End at the highest opacity
         else:
-            self.flicker_animation.setKeyValueAt(0.0, 1.0)  # Start at the highest opacity
+            self.flicker_animation.setKeyValueAt(0.0, 0.15)  # Start at the highest opacity
             self.flicker_animation.setKeyValueAt(0.1, 0.11)  # Slight drop
             self.flicker_animation.setKeyValueAt(0.2, 0.13)  # Bounce back up
             self.flicker_animation.setKeyValueAt(0.3, 0.07)  # Subtle drop
