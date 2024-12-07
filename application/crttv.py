@@ -1,225 +1,4 @@
 import random
-from PyQt5.QtWidgets import QApplication, QLabel
-from PyQt5.QtCore import Qt, QTimer
-from PyQt5.QtGui import QPainter, QColor, QFont, QLinearGradient
-
-import random
-from PyQt5.QtWidgets import QApplication, QLabel
-from PyQt5.QtCore import Qt, QTimer
-from PyQt5.QtGui import QPainter, QColor, QFont, QLinearGradient
-
-import random
-from PyQt5.QtCore import Qt, QTimer, QPropertyAnimation, pyqtProperty, QPoint
-from PyQt5.QtWidgets import QApplication, QLabel
-from PyQt5.QtGui import QPainter, QColor, QFont, QLinearGradient
-
-# class AnimatedColorSeparationLabel(QLabel):
-#     def __init__(self, text, parent=None):
-#         super().__init__(text, parent)
-#         self.setAlignment(Qt.AlignCenter)
-#         self.setStyleSheet("color: white; font-size: 36px; background-color: black;")
-#         self.setup_flicker()
-        
-#         self.red_offset = 0
-#         self.blue_offset = 0
-#         self.yellow_offset = 0
-        
-
-#         # Timer for color separation animation
-#         self.timer = QTimer(self)
-#         self.timer.timeout.connect(self.update_offsets)
-#         self.timer.start(60)  # Update at ~12.5fps
-        
-        
-#     def setup_flicker(self):
-#         # Flicker Timer
-#         self.flicker_timer = QTimer(self)
-#         self.flicker_timer.timeout.connect(self.random_flicker)
-#         self.flicker_timer.start(60)  # Faster flickering
-
-#     def random_flicker(self):
-#         # Random opacity flicker (0-255)
-        
-#         opacity = random.randint(150, 255)  # Random opacity between 150-255
-#         print(f"INT: {opacity}")
-#         self.setStyleSheet(f"color: rgb({opacity}, {opacity}, {opacity}); background-color: black;")
-        
-#         # # Random opacity flicker (0-255)
-#         # self.opacity = random.randint(0, 255)  # Random opacity between 0-255
-#         # self.update()  # Make sure to trigger a repaint after opacity change
-
-        
-#     def update_offsets(self):
-#         # Randomize offsets for red, blue, and yellow shadows
-#         self.red_offset = random.uniform(-4, 8)
-#         self.blue_offset = random.uniform(-8, 4)
-#         self.yellow_offset = random.uniform(-4, 4)
-#         self.update()  # Trigger repaint
-
-#     def paintEvent(self, event):
-#         super().paintEvent(event)
-#         painter = QPainter(self)
-#         painter.setRenderHint(QPainter.Antialiasing)
-        
-#         # Get text details
-#         text = self.text()
-#         rect = self.rect()
-        
-#         # Set font
-#         font = QFont("Arial", 36)
-#         painter.setFont(font)
-        
-#         # Draw blue shadow
-#         blue_offset_int = int(self.blue_offset)  # Cast to int
-#         painter.setPen(QColor(0, 30, 255, 128))  # Blue with transparency
-#         painter.drawText(rect.adjusted(blue_offset_int, 0, blue_offset_int, 0), Qt.AlignCenter, text)
-        
-#         # Draw red shadow
-#         red_offset_int = int(self.red_offset)  # Cast to int
-#         painter.setPen(QColor(255, 0, 80, 128))  # Red with transparency
-#         painter.drawText(rect.adjusted(-red_offset_int, 0, -red_offset_int, 0), Qt.AlignCenter, text)
-        
-#         # Draw yellow shadow
-#         yellow_offset_int = int(self.yellow_offset)  # Cast to int
-#         painter.setPen(QColor(255, 255, 0, 128))  # Yellow with transparency
-#         painter.drawText(rect.adjusted(0, yellow_offset_int, 0, yellow_offset_int), Qt.AlignCenter, text)
-        
-#         # # Draw main white text
-#         # painter.setPen(Qt.white)
-#         # painter.drawText(rect, Qt.AlignCenter, text)
-
-#         # Apply a CRT-like gradient overlay
-#         gradient = QLinearGradient(0, 0, 0, self.height())
-#         gradient.setColorAt(0.5, QColor(50, 50, 200, 80))  # Soft blue color
-#         gradient.setColorAt(1.0, QColor(150, 50, 200, 30))  # Soft purple color
-#         painter.fillRect(self.rect(), gradient)
-
-#         # Add scanline effect
-#         for y in range(0, self.height(), 2):
-#             painter.fillRect(0, y, self.width(), 1, QColor(18, 16, 16, 16))  # Less intense scanlines
-
-#         painter.end()
-        
-#     def resizeEvent(self, event):
-#         # Adjust font size based on width
-#         self.adjustFontSize()
-#         super().resizeEvent(event)
-
-#     def adjustFontSize(self):
-#         font = QFont("Arial", 36)
-#         # Dynamically adjust font size based on label width (the text size)
-#         # new_font_size = 50  # Set the font size to be the same as the label's width
-#         # font.setPointSize(new_font_size)  # Adjust the font size
-#         self.setFont(font)
-
-# if __name__ == "__main__":
-#     app = QApplication([])
-#     label = AnimatedColorSeparationLabel("Animated Color Separation and Flicker Effect")
-#     label.resize(800, 400)
-#     label.show()
-#     app.exec_()
-
-
-# import random
-# from PyQt5.QtWidgets import QApplication, QLabel
-# from PyQt5.QtCore import Qt, QTimer
-# from PyQt5.QtGui import QPainter, QColor, QFont, QLinearGradient
-
-# class AnimatedColorSeparationLabel(QLabel):
-#     def __init__(self, text, parent=None):
-#         super().__init__(text, parent)
-#         self.setAlignment(Qt.AlignCenter)
-#         self.setStyleSheet("color: white; font-size: 36px; background-color: black;")
-        
-#         # Initialize color offsets for shadows
-#         self.red_offset = 0
-#         self.blue_offset = 0
-#         self.yellow_offset = 0
-        
-#         # Initialize flicker opacity
-#         self.opacity = 0  # Initial random opacity
-        
-#         # Set up flicker timer
-#         self.flicker_timer = QTimer(self)
-#         self.flicker_timer.timeout.connect(self.random_flicker)
-#         self.flicker_timer.start(150)  # Flickering faster
-        
-#         # # Timer for color separation animation
-#         # self.timer = QTimer(self)
-#         # self.timer.timeout.connect(self.update_offsets)
-#         # self.timer.start(60)  # Update at ~12.5fps
-
-#     def random_flicker(self):
-#         # Random opacity flicker (0-255)
-#         self.opacity = random.randint(200, 255)  # Random opacity between 0-255
-#         self.update_offsets()
-#         self.update()  # Trigger a repaint to reflect the new opacity
-
-#     def update_offsets(self):
-#         # Randomize offsets for red, blue, and yellow shadows
-#         self.red_offset = random.uniform(-3, 3)
-#         self.blue_offset = random.uniform(-3, 3)
-#         self.yellow_offset = random.uniform(-3, 3)
-#         self.update()  # Trigger repaint
-
-#     def paintEvent(self, event):
-#         painter = QPainter(self)
-#         painter.setRenderHint(QPainter.Antialiasing)
-
-#         # Get text details
-#         text = self.text()
-#         rect = self.rect()
-
-#         # Set font for custom drawing
-#         font = QFont("Arial", 36)
-#         painter.setFont(font)
-
-#         # Control opacity using QPainter
-#         painter.setOpacity(self.opacity / 255)  # Normalize opacity to a value between 0 and 1
-
-#         # First, draw the text with shadows (color separation)
-#         # Draw blue shadow
-#         blue_offset_int = int(self.blue_offset)  # Cast to int
-#         painter.setPen(QColor(0, 30, 255, 128))  # Blue with transparency
-#         painter.drawText(rect.adjusted(blue_offset_int, 0, blue_offset_int, 0), Qt.AlignCenter, text)
-
-#         # Draw red shadow
-#         red_offset_int = int(self.red_offset)  # Cast to int
-#         painter.setPen(QColor(255, 0, 80, 128))  # Red with transparency
-#         painter.drawText(rect.adjusted(-red_offset_int, 0, -red_offset_int, 0), Qt.AlignCenter, text)
-
-#         # Draw yellow shadow
-#         yellow_offset_int = int(self.yellow_offset)  # Cast to int
-#         painter.setPen(QColor(255, 255, 0, 128))  # Yellow with transparency
-#         painter.drawText(rect.adjusted(0, yellow_offset_int, 0, yellow_offset_int), Qt.AlignCenter, text)
-
-#         # Draw the main white text
-#         painter.setPen(Qt.white)
-#         painter.drawText(rect, Qt.AlignCenter, text)
-
-#         # Apply a CRT-like gradient overlay
-#         gradient = QLinearGradient(0, 0, 0, self.height())
-#         gradient.setColorAt(0.5, QColor(50, 50, 200, 80))  # Soft blue color
-#         gradient.setColorAt(1.0, QColor(150, 50, 200, 30))  # Soft purple color
-#         painter.fillRect(self.rect(), gradient)
-
-#         # Add scanline effect
-#         for y in range(0, self.height(), 2):
-#             painter.fillRect(0, y, self.width(), 1, QColor(18, 16, 16, 16))  # Less intense scanlines
-
-#         painter.end()
-
-# if __name__ == "__main__":
-#     app = QApplication([])
-#     label = AnimatedColorSeparationLabel("Animated Color Separation and Flicker Effect")
-#     label.resize(800, 400)
-#     label.show()
-#     app.exec_()
-
-
-
-
-import random
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout
 from PyQt5.QtCore import Qt, QTimer, QVariantAnimation, QPropertyAnimation, pyqtProperty, QPoint
 from PyQt5.QtWidgets import QApplication, QLabel
@@ -251,7 +30,8 @@ class AnimatedColorSeparationLabel(QWidget):
         self.flicker_animation.setLoopCount(-1)  # Loop indefinitely
         
         if self.BackgroundColor == "black":
-            # Define keyframe-like opacity values (from your CSS flicker)
+            # Define keyframe-like opacity values (from your CSS flicker) 
+            # Values can be either 255-0 or 1.0-0.0 but they must match for same animation
             self.flicker_animation.setKeyValueAt(0.0, 0.95)  # Start at the highest opacity
             self.flicker_animation.setKeyValueAt(0.1, 0.91)  # Slight drop
             self.flicker_animation.setKeyValueAt(0.2, 0.93)  # Bounce back up
@@ -264,7 +44,7 @@ class AnimatedColorSeparationLabel(QWidget):
             self.flicker_animation.setKeyValueAt(0.9, 0.92)  # Slight rise
             self.flicker_animation.setKeyValueAt(1.0, 0.95)  # End at the highest opacity
         else:
-            self.flicker_animation.setKeyValueAt(0.0, 0.15)  # Start at the highest opacity
+            self.flicker_animation.setKeyValueAt(0.0, 1.0)  # Start at the highest opacity
             self.flicker_animation.setKeyValueAt(0.1, 0.11)  # Slight drop
             self.flicker_animation.setKeyValueAt(0.2, 0.13)  # Bounce back up
             self.flicker_animation.setKeyValueAt(0.3, 0.07)  # Subtle drop
@@ -348,8 +128,10 @@ class AnimatedColorSeparationLabel(QWidget):
         font.setWeight(QFont.DemiBold)
         painter.setFont(font)
 
-
-        painter.setOpacity(1)
+        """
+        Color Seperation
+        """
+        painter.setOpacity(255)
         # First, draw the text with shadows (color separation)
         # Draw blue shadow
         blue_offset_int = int(self.blue_offset)  # Cast to int
@@ -367,8 +149,7 @@ class AnimatedColorSeparationLabel(QWidget):
         painter.setPen(QColor(0, 255, 0, 128))  # Green with transparency
         painter.drawText(rect.adjusted(0, yellow_offset_int, 0, yellow_offset_int), Qt.AlignCenter, text)
 
-        # Draw the main white text
-        
+        # Draw the main text
         if self.BackgroundColor == "white":
             painter.setPen(QColor(0, 0, 0, 255)) # Black
         else:
@@ -376,49 +157,47 @@ class AnimatedColorSeparationLabel(QWidget):
         
         painter.drawText(rect, Qt.AlignCenter, text)
 
+
+        
+        
+        """
+        CRT TV OVERLAY
+        """
         # Control opacity using QPainter
         painter.setOpacity(self._opacity)  # Use the set opacity
+        
         # Apply a CRT-like gradient overlay
-        gradient_CRT_backlight = QLinearGradient(0, 0, 0, self.height())
-        
-        
         # center_x = self.width() / 2
         # center_y = self.height() / 2
         # radius = min(self.width(), self.height()) / 2
         # gradient = QRadialGradient(center_x, center_y, radius)
         
-        # gradient.setColorAt(0.0, QColor(248, 248, 248, 30))  # Soft purple color
-        # gradient.setColorAt(0.5, QColor(150, 50, 200, 80))  # Soft blue color
-        # gradient.setColorAt(1, QColor(248, 248, 248, 30))  # Soft purple color
+        gradient_CRT_backlight = QLinearGradient(0, 0, 0, self.height())
+        
+        
+
         
         if self.BackgroundColor == "black":
-            # gradient.setColorAt(0.0, QColor(200, 255, 150, 30))  # Soft green-yellow at the top
             gradient_CRT_backlight.setColorAt(0.5, QColor(255, 255, 255, 10))   # Neutral white in the center
-            # gradient.setColorAt(1.0, QColor(150, 150, 255, 30))  # Soft blue-purple at the bottom
-            # gradient.setColorAt(0.5, QColor(85, 100, 50, 90))  # A muted olive green, typical of older CRT screens
-            # gradient.setColorAt(1.0, QColor(20, 20, 20, 150))   # A very dark gray/black, giving the screen depth
+            # gradient_CRT_backlight.setColorAt(0.5, QColor(150, 50, 200, 80))  # Soft blue color
+         
         
         if self.colorOverlay == True and self.BackgroundColor == "black":
             gradient_CRT_backlight.setColorAt(0.0, QColor(0, 0, 0, 255))
-            
             gradient_CRT_backlight.setColorAt(1.0, QColor(0, 0, 0, 255))
+            # gradient_CRT_backlight.setColorAt(0.0, QColor(20, 20, 20, 30))   # A very dark gray/black, giving the screen depth
+            # gradient_CRT_backlight.setColorAt(1.0, QColor(20, 20, 20, 30))   # A very dark gray/black, giving the screen depth
         
         if self.colorOverlay == True and self.BackgroundColor != "black":
             gradient_CRT_backlight.setColorAt(0.0, QColor(200, 255, 150, 255))  # Soft green-yellow at the top
-            # gradient.setColorAt(0.5, QColor(255, 255, 255, 255))   # Neutral white in the center
-            # gradient.setColorAt(0.5, QColor(0, 0, 0, 128))   # Neutral white in the center
-
             gradient_CRT_backlight.setColorAt(1.0, QColor(150, 150, 255, 255))  # Soft blue-purple at the bottom  
-        
-        # painter.setBrush(QBrush(gradient))
-        # painter.drawRect(0, 0, self.width(), self.height())
+
         
         painter.fillRect(self.rect(), gradient_CRT_backlight)
 
         # Add scanline effect
         line_desnity_v = 2
         line_desnity_h = 2
-        
         
         
         # Add Horizontal scan lines # linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
@@ -428,10 +207,6 @@ class AnimatedColorSeparationLabel(QWidget):
             
         # Add vertical scan lines #  linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
         for x in range(0, self.width(), line_desnity_h):
-            # painter.fillRect(x, 0, 1, self.height(), QColor(18, 16, 16, 60)) # Slightly lighter dark line
-            
-            # gradient = QLinearGradient(x, 0, x + 1, self.height())  # Vertical gradient
-            # gradient = QLinearGradient(x, 0, x + 1, 0)  # Horizontal gradient (90 degrees)
 
             gradient_CRT_ScanLines = QLinearGradient(0, 0, 20, 0)  # Horizontal gradient (90 degrees, spans 1 pixel horizontally)
             
@@ -447,16 +222,6 @@ class AnimatedColorSeparationLabel(QWidget):
                 
             gradient_CRT_ScanLines.setSpread(QLinearGradient.RepeatSpread)
             painter.fillRect(x, 0, 1, self.height(), gradient_CRT_ScanLines)
-
-        
-        # else:
-        #     # Add Horizontal scan lines 
-        #     for y in range(0, self.height(), 2):
-        #         painter.fillRect(0, y, self.width(), 1, QColor(100, 100, 100, 255))  # Light gray line with transparency
-
-        #     # Add vertical scan lines
-        #     for x in range(0, self.width(), 2):
-        #         painter.fillRect(x, 0, 1, self.height(), QColor(110, 110, 110, 255))  # Less intense scanlines
 
         painter.end()
 
