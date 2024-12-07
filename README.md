@@ -11,11 +11,10 @@
   - when I have some more money for the electronics for testing and implementation inside my car. 
 
 ---
-# My Current UI Styled | Version 1 | Theme: Purple Haze
-![View#4](https://github.com/user-attachments/assets/78091b44-3111-4614-bc11-26c63a528444)
-![View#3](https://github.com/user-attachments/assets/534ed7eb-0c59-459f-815e-f4a611aab336)
-![View#2](https://github.com/user-attachments/assets/01a68a84-ca93-452b-9610-870be4352eee)
-![View#1](https://github.com/user-attachments/assets/d8f308ac-9ac5-4a02-a643-b17583bb4d9e)
+# My Current UI Styled Player Demo | Version 2 | Theme: RedSynth
+![RedSynthThemePlayerDemo-optimize](https://github.com/user-attachments/assets/1e271356-41ab-49dc-9115-f43c54b75ec9)
+
+https://github.com/user-attachments/assets/16b82cee-a93d-4cb0-b4bd-2342dd81cbb5
 
 ---
 ## Inspiration
